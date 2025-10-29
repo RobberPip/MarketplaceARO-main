@@ -1,0 +1,30 @@
+.p-radiobutton {
+  height: 12px;
+  width: 12px;
+
+  &:hover:not(.p-highlight) {
+    & > .p-radiobutton-box > .p-radiobutton-icon {
+      opacity: 0.3;
+      transform: scale(0.8);
+      visibility: unset;
+    }
+  }
+}
+
+.p-radiobutton-input {
+  border: none;
+}
+
+.p-radiobutton-box {
+  height: 12px;
+  width: 12px;
+  border: 1px solid #2B2C2E;
+  background-color: transparent;
+}
+
+.p-radiobutton-icon {
+  height: 6px;
+  width: 6px;
+
+  background-color: #2B2C2E;
+}

@@ -1,0 +1,61 @@
+.p-menu-overlay {
+  font-size: 14px;
+}
+.p-disabled, .p-disabled * {
+    color: $textSecondaryColor;
+}
+.p-menu{
+  border-color: #BCBCBC;
+}
+.p-reset{
+  margin-bottom: 0px !important;
+}
+.p-menu-overlay .p-menuitem-header h1{
+  margin: 0;
+}
+
+.p-menu-overlay .p-menuitem-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 16px;
+}
+
+.p-menu-overlay .p-menuitem-content {
+  margin: 0;
+
+  &:hover {
+    background-color: #E9E9E9;
+  }
+}
+
+.p-menu-overlay .p-menuitem-link{
+  padding: 6px 16px;
+
+  & > span {
+    margin-right: 8px;
+  }
+}
+.p-menuitem-content:hover:has(a.p-disabled) {
+  background-color: transparent !important;
+}
+
+
+.p-menu-overlay .p-menuitem-exit {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  will-change: color, background-color;
+  transition: color 0.2s ease-in, background-color 0.2s ease-in;
+}
+
+.p-menu-overlay:hover .p-menuitem-exit:hover {
+  color: #D71424 !important;
+  background-color: #FFE6E8;
+}
+
+.p-menuitem-exit:hover .p-menuitem-red {
+  background-color: #D71424 !important;
+}

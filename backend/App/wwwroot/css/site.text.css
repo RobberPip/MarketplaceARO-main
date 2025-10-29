@@ -1,0 +1,313 @@
+/*Styles for text content*/
+
+/*font-family: 'SuisseIntl-Regular' !important;*/
+/*font-family: 'SuisseIntl-SemiBold' !important;*/
+/*font-family: 'SuisseIntlMono' !important;*/
+/*font-family: 'SuisseIntl-Bold' !important;*/
+
+
+h1 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 80px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 110% !important; /* 88px */
+}
+@media screen and (max-width: 640px) {
+    h1 {
+        font-size: 64px !important;
+    }
+}
+
+h2 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 50px !important;
+    font-weight: 500 !important;
+    line-height: 110% !important; /* 55px */
+}
+@media screen and (max-width: 640px) {
+    h2 {
+        font-size: 33px !important;
+    }
+}
+
+h3 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 33px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 110% !important; /* 36.3px */
+}
+@media screen and (max-width: 640px) {
+    h3 {
+        font-size: 25px !important;
+    }
+}
+
+h4 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 25px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 110% !important; /* 27.5px */
+}
+
+h5 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 25px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 32.5px */
+}
+@media screen and (max-width: 640px) {
+    h5 {
+        font-size: 17px !important;
+        letter-spacing: 0.34px !important;
+    }
+}
+
+h6 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 22px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+}
+@media screen and (max-width: 640px) {
+    h6 {
+        font-size: 17px !important;
+        letter-spacing: 0.34px !important;
+    }
+}
+
+.text1 {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 22px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+}
+@media screen and (max-width: 640px) {
+    .text1 {
+        font-size: 17px !important;
+        line-height: 130% !important; /* 22.1px */
+        letter-spacing: 0.34px !important;
+    }
+}
+
+.text1-duple {
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+}
+
+.text1-gray {
+    color: #898989 !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 22px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+}
+
+@media screen and (max-width: 640px) {
+    .text1-gray {
+        font-size: 17px !important;
+        line-height: 130% !important; /* 22.1px */
+        letter-spacing: 0.34px !important;
+    }
+}
+
+.text2 {
+    color: #2B2C2E;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.34px !important;
+}
+
+.text2-gray {
+    color: #898989 !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.34px !important;
+}
+
+.text3 {
+    color: #2B2C2E;
+    font-family: SF Pro Display;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 22.1px */
+    letter-spacing: 0.34px;
+}
+@media screen and (max-width: 640px) {
+    .text3 {
+        font-size: 15px !important;
+        line-height: 130% !important; /* 22.1px */
+        letter-spacing: 0.34px !important;
+    }
+}
+
+.text3-gray {
+    color: #BCBCBC !important;
+    font-family: SF Pro Display;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 22.1px */
+    letter-spacing: 0.34px;
+}
+@media screen and (max-width: 640px) {
+    .text3-gray {
+        font-size: 15px !important;
+        line-height: 130% !important; /* 22.1px */
+        letter-spacing: 0.34px !important;
+    }
+}
+
+.text4-gray {
+    color: #BCBCBC !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 19.5px */
+}
+
+.text4-white {
+    color: #FFF !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 160% !important; /* 19.5px */
+    margin-bottom: 0px !important;
+}
+
+.navbar-text .nav-link {
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.34px !important;
+    padding-top: 0px !important;
+}
+@media screen and (max-width: 575px) {
+    .navbar-text .nav-link {
+        padding-top: 28px !important;
+        color: #2B2C2E !important;
+        font-size: 22px !important;
+        line-height: 140% !important; /* 30.8px */
+        letter-spacing: 0.44px !important;
+    }
+}
+.navbar-text:hover .nav-link {
+    color: #2B2C2E !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*Text in header*/
+.header-text-item {
+    width: fit-content;
+    font-family: "SF Pro Display-Regular", Helvetica;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+}
+
+    /*Main text style for headings*/
+    .content-heading {
+        font-family: "Suisse Intl-Book", Helvetica;
+        font-weight: 400;
+        color: #2B2C2E;
+    }
+
+    /*Main text style for simple content*/
+    .content-text {
+        font-family: "SF Pro Display-Regular", Helvetica;
+        font-weight: 400;
+        color: #2B2C2E;
+        text-wrap: wrap;
+    }
+
+    /*Secondary text style for simple content*/
+    .content-text-gray {
+        width: fit-content;
+        font-family: "SF Pro Display-Regular", Helvetica;
+        font-weight: 400;
+        color: gray;
+        text-align: center;
+        text-wrap: wrap;
+    }
+
+    /*Text style for footer content*/
+    .footer-content-side {
+        text-align: center;
+        font-family: "Geologica", Helvetica;
+        font-weight: 300;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    /*Text style for footer content*/
+    .footer-content-center {
+        text-align: center;
+        font-family: "Geologica", Helvetica;
+        font-weight: 400;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    /*Text style for software count*/
+    .index-info-heading-number {
+        font-family: "Suisse Intl-Book", Helvetica;
+        font-weight: 400;
+        font-size: 120px;
+        color: #2b2c2e;
+    }
+
+    /*Text style for opportunity icons*/
+    .opport-icon-heading {
+        font-family: "SF Pro Display-Regular", Helvetica;
+        font-weight: 400;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    /*Text style for software card heading*/
+    .content-software-heading {
+        font-family: "SF Pro Display-Regular", Helvetica;
+        font-weight: 400;
+        color: #2B2C2E;
+    }

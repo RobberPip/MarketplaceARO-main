@@ -1,0 +1,105 @@
+﻿.filter-accordion {
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.02em !important;
+    text-align: left !important;
+    color: #2b2c2e !important;
+    position: relative;
+    height: 48px !important;
+    width: 100%;
+    margin-bottom: 8px;
+    padding-inline: 16px;
+    cursor: pointer;
+    background-color: #fff !important;
+    border: 1px solid !important;
+    border-color: #bcbcbc !important;
+    border-radius: 10px !important;
+    transition: 0.4s !important;
+}
+
+.filter-accordion-disabled {
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.02em !important;
+    text-align: left !important;
+    color: #bcbcbc !important;
+    position: relative;
+    height: 48px;
+    width: 100%;
+    margin-bottom: 8px;
+    padding-inline: 16px;
+    background-color: #fff !important;
+    border: 1px solid !important;
+    border-color: #bcbcbc !important;
+    border-radius: 10px !important;
+}
+
+.filter-accordion.active {
+    margin-bottom: 6px;
+    border-color: #2b2c2e !important;
+}
+
+.filter-accordion:hover {
+    border-color: #2b2c2e !important;
+}
+
+
+.filter-accordion::after {
+    display: block;
+    position: absolute;
+    right: 12px;
+    bottom: 50%;
+    width: 24px;
+    height: 24px;
+    content: '';
+    background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M18.0972 9.91569C18.4522 9.56066 18.4522 8.98506 18.0972 8.63004C17.7422 8.27501 17.1666 8.27501 16.8116 8.63004L11.9999 13.4418L7.18815 8.63004C6.83312 8.27501 6.25752 8.27501 5.9025 8.63004C5.54747 8.98506 5.54747 9.56066 5.9025 9.91569L11.357 15.3702C11.7121 15.7253 12.2877 15.7253 12.6427 15.3702L18.0972 9.91569Z' fill='%23898989'/%3E%3C/svg%3E%0A") no-repeat center / cover;
+    transform: translateY(50%);
+    transition: .2s ease-in;
+}
+
+.filter-accordion.active::after {
+    transform: translateY(50%) rotate(180deg);
+}
+
+.filter-accordion-panel {
+    display: none;
+    margin-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid !important;
+    border-color: #2b2c2e !important;
+    border-radius: 10px;
+    overflow: hidden !important;
+}
+
+.filter-accordion-panel-searcher {
+    display: none;
+    margin-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 20px;
+    height: 271px;
+    border: 1px solid !important;
+    border-color: #2b2c2e !important;
+    border-radius: 10px;
+    overflow: hidden !important;
+}
+
+.filter-mark-list {
+    list-style-type: none !important;
+    list-style-position: inside !important;
+    padding-inline: 0 !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+.filter-overflow-container {
+    position: relative;
+    height: 223px;
+    overflow: auto !important;
+}

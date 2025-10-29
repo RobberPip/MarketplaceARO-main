@@ -1,0 +1,15 @@
+.p-fileupload-choose {
+  @extend .p-button-outlined, .p-button-lg;
+
+  & > .p-button-icon {
+    display: none;
+  }
+}
+.p-fileupload .p-fileupload-row > div {
+  padding: 0rem;
+  padding-left: 1.5rem;
+}
+.p-fileupload-row  {
+  padding: 0.5rem;
+  padding-left: 0rem;
+}

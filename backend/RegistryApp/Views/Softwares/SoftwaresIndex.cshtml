@@ -1,0 +1,1711 @@
+﻿@model SoftwareVM[]
+@{
+    ViewData["Title"] = "Реестр ПО";
+}
+
+<div class="container-fluid">
+    <div class="render-body">
+        <div class="registry-heading-container">
+            <h3>Перечень цифровых продуктов для строительства</h3>
+            <div id="inline-cheaps-container" class="inline-cheaps-container">
+                @if ((bool)ViewData["HasFilters"])
+                {
+                    <p class="text1-gray" style="margin-right:32px;">найдено @ViewData["SoftwaresCount"] штук</p>
+                    @foreach (var filterChip in ViewData["FilterChips"] as List<FilterChipVM>)
+                    {
+                        <button type="button" class="filter-chip" data-filter-name="@filterChip.FilterName"
+                                data-filter-value="@filterChip.FilterValue" data-single-filter="@filterChip.IsSingleFilter"
+                                hx-post="/softwares" hx-vals="" hx-target="#software-collection" onclick="cleanSoftwareFilterByChip(this)">
+                            @filterChip.FilterValue
+                            <span>
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.19635 5.99635L12 10.8L10.817 12L6.00012 7.1907L1.18325 12L0.000244141 10.8L4.8039 5.99635L0 1.2L1.2 0L6.00012 4.80012L10.8002 0L12.0002 1.2L7.19635 5.99635Z" fill="#898989" />
+                                </svg>
+                            </span>
+                        </button>
+                    }
+                    <button type="button" class="filter-chip-cleanall" onclick="cleanAllSoftwareFilters(this)"
+                            hx-post="/softwares" hx-vals="" hx-target="#software-collection">
+                        Очистить все фильтры
+                    </button>
+                    <button type="button" class="software-index-share-btn" onclick="getFiltersShortLink()">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1528_6214)">
+                                <path d="M8 20C10.2091 20 12 18.2091 12 16C12 13.7909 10.2091 12 8 12C5.79086 12 4 13.7909 4 16C4 18.2091 5.79086 20 8 20Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 29C24.2091 29 26 27.2091 26 25C26 22.7909 24.2091 21 22 21C19.7909 21 18 22.7909 18 25C18 27.2091 19.7909 29 22 29Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 11C24.2091 11 26 9.20914 26 7C26 4.79086 24.2091 3 22 3C19.7909 3 18 4.79086 18 7C18 9.20914 19.7909 11 22 11Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.6363 9.16248L11.3638 13.8375" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.3638 18.1625L18.6363 22.8375" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1528_6214">
+                                    <rect width="32" height="32" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+                }
+                else
+                {
+                    <p class="text1-gray" style="margin-right:24px;">всего @ViewData["SoftwaresCount"] штук</p>
+                    <button type="button" class="software-index-share-btn" onclick="getFiltersShortLink()">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1528_6214)">
+                                <path d="M8 20C10.2091 20 12 18.2091 12 16C12 13.7909 10.2091 12 8 12C5.79086 12 4 13.7909 4 16C4 18.2091 5.79086 20 8 20Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 29C24.2091 29 26 27.2091 26 25C26 22.7909 24.2091 21 22 21C19.7909 21 18 22.7909 18 25C18 27.2091 19.7909 29 22 29Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 11C24.2091 11 26 9.20914 26 7C26 4.79086 24.2091 3 22 3C19.7909 3 18 4.79086 18 7C18 9.20914 19.7909 11 22 11Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.6363 9.16248L11.3638 13.8375" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.3638 18.1625L18.6363 22.8375" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1528_6214">
+                                    <rect width="32" height="32" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="filter-content-wrapper">
+                    <p class="text1-duple" style="margin-bottom:5px;">Основная информация</p>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Вендор</button>
+                    <div class="filter-accordion-panel-searcher">
+                        <div class="filter-search-wrapper">
+                            <span class="filter-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_131_6990)">
+                                        <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                        <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_131_6990">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                            <input id="company-filter-input" class="filter-search" type="search" placeholder="Поиск" title=""
+                                    onkeyup="filterByInput('company-filter-input', 'company-filter-marklist')">
+                            <button class="filter-search-close-btn" 
+                                onclick="cleanFilterSearchInput('company-filter-input', 'company-filter-marklist')">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Icons">
+                                        <g id="Vector">
+                                            <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="company-overflow-container" class="filter-overflow-container">
+                            <ul id="company-filter-marklist" class="filter-mark-list">
+                                @foreach (var item in ViewData["VendorNames"] as IEnumerable<string>)
+                                {
+                                    @if ((ViewData["VendorNames_Selected"] as IEnumerable<string>).Contains(item))
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search checked">
+                                                <input id="@item" name="company_filter" type="checkbox" class="filter-checkbox" checked
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search">
+                                                <input id="@item" name="company_filter" type="checkbox" class="filter-checkbox"
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Применение</button>
+                    <div id="activity-container" class="filter-accordion-panel">
+                        <ul class="filter-mark-list" id="activity-filter-marklist">
+                            @foreach (var item in ViewData["ClassificationActivity"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["ClassificationActivity_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-radio-wrapper checked">
+                                            @item
+                                            <input type="checkbox" name="activity_filter" id="@item" class="filter-radio" hidden checked
+                                                    onchange="markAsCheckedForRadio(this)" onclick="filterSoftwaresSubmitByRadioEntity(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                            <span class="fake-radio">
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                                </svg>
+                                            </span>
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-radio-wrapper">
+                                            @item
+                                            <input type="checkbox" name="activity_filter" id="@item" class="filter-radio" hidden
+                                                    onchange="markAsCheckedForRadio(this)" onclick="filterSoftwaresSubmitByRadioEntity(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                            <span class="fake-radio">
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                                </svg>
+                                            </span>
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Тип работы</button>
+                    <div id="softwaretype-container" class="filter-accordion-panel">
+                        <ul class="filter-mark-list" id="softwaretype-filter-marklist">
+                            @foreach (var item in ViewData["ClassificationSoftwareType"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["ClassificationSoftwareType_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-radio-wrapper checked">
+                                            @item
+                                            <input type="checkbox" name="softwareType_filter" id="@item" class="filter-radio" checked
+                                                    onchange="markAsCheckedForRadio(this)" onclick="filterSoftwaresSubmitByRadioEntity(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                            <span class="fake-radio">
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                                </svg>
+                                            </span>
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-radio-wrapper">
+                                            @item
+                                            <input type="checkbox" name="softwareType_filter" id="@item" class="filter-radio" hidden
+                                                    onchange="markAsCheckedForRadio(this)" onclick="filterSoftwaresSubmitByRadioEntity(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                            <span class="fake-radio">
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                                </svg>
+                                            </span>
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Основной продукт</button>
+                    <div class="filter-accordion-panel-searcher">
+                        <div class="filter-search-wrapper">
+                            <span class="filter-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_131_6990)">
+                                        <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                        <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_131_6990">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                            <input id="mainproduct-filter-input" class="filter-search" type="search" placeholder="Поиск" title=""
+                                    onkeyup="filterByInput('mainproduct-filter-input', 'mainproduct-filter-marklist')">
+                            <button class="filter-search-close-btn" 
+                                onclick="cleanFilterSearchInput('mainproduct-filter-input', 'mainproduct-filter-marklist')">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Icons">
+                                        <g id="Vector">
+                                            <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="mainproduct-overflow-container" class="filter-overflow-container">
+                            <ul id="mainproduct-filter-marklist" class="filter-mark-list">
+                                @foreach (var item in ViewData["MainProduct"] as IEnumerable<string>)
+                                {
+                                    @if ((ViewData["MainProduct_Selected"] as IEnumerable<string>).Contains(item))
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search checked">
+                                                <input id="@item" name="mainproduct_filter" type="checkbox" class="filter-checkbox" checked
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search">
+                                                <input id="@item" name="mainproduct_filter" type="checkbox" class="filter-checkbox"
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p class="text1-duple" style="margin-top:24px;margin-bottom:8px;">Классификация</p>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Стадия жизненного цикла</button>
+                    <div id="stage-container" class="filter-accordion-panel">
+                        <ul class="filter-mark-list" id="stage-filter-marklist">
+                            @foreach (var item in ViewData["ClassificationLifeStage"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["ClassificationLifeStage_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper checked">
+                                            <input id="@item" name="stage_filter" type="checkbox" class="filter-checkbox" checked
+                                                    onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper">
+                                            <input id="@item" name="stage_filter" type="checkbox" class="filter-checkbox"
+                                                    onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <button type="button" class="filter-accordion-disabled" disabled>Бизнес-процесс</button>
+                    <div class="filter-accordion-panel-searcher">
+                        <div class="filter-search-wrapper">
+                            <span class="filter-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_131_6990)">
+                                        <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                        <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_131_6990">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                            <input id="businessprocess-filter-input" class="filter-search" type="search" placeholder="Поиск" title=""
+                                    onkeyup="filterByInput('businessprocess-filter-input', 'businessprocess-filter-marklist')">
+                            <button class="filter-search-close-btn" 
+                                onclick="cleanFilterSearchInput('businessprocess-filter-input', 'businessprocess-filter-marklist')">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Icons">
+                                        <g id="Vector">
+                                            <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="businessprocess-overflow-container" class="filter-overflow-container">
+                            <ul id="businessprocess-filter-marklist" class="filter-mark-list">
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Класс ПО</button>
+                    <div class="filter-accordion-panel-searcher">
+                        <div class="filter-search-wrapper">
+                            <span class="filter-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_131_6990)">
+                                        <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                        <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_131_6990">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                            <input id="content-filter-input" class="filter-search" type="search" placeholder="Поиск" title=""
+                                    onkeyup="filterByInput('content-filter-input', 'content-filter-marklist')">
+                            <button class="filter-search-close-btn" 
+                                onclick="cleanFilterSearchInput('content-filter-input', 'content-filter-marklist')">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Icons">
+                                        <g id="Vector">
+                                            <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="content-overflow-container" class="filter-overflow-container">
+                            <ul id="content-filter-marklist" class="filter-mark-list">
+                                @foreach (var item in ViewData["ClassificationContent"] as IEnumerable<string>)
+                                {
+                                    @if ((ViewData["ClassificationContent_Selected"] as IEnumerable<string>).Contains(item))
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search checked">
+                                                <input id="@item" name="content_filter" type="checkbox" class="filter-checkbox" checked
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <label class="filter-select-wrapper-for-search">
+                                                <input id="@item" name="content_filter" type="checkbox" class="filter-checkbox"
+                                                        onchange="markAsChecked(this)" onclick="filterSoftwaresSubmitByEntityInList(this)"
+                                                        hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                                <span class="checkmark"></span>
+                                                @item
+                                            </label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="filter-accordion-disabled" disabled>Объект воздействия</button>
+                    <div id="influence-container" class="filter-accordion-panel">
+                        <ul class="filter-mark-list" id="influence-filter-marklist">
+                        </ul>
+                    </div>
+                    <button type="button" class="filter-accordion-disabled" disabled>Марка проекта</button>
+                    <div class="filter-accordion-panel-searcher">
+                        <div class="filter-search-wrapper">
+                            <span class="filter-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_131_6990)">
+                                        <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                        <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_131_6990">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                            <input id="mark-filter-input" class="filter-search" type="search" placeholder="Поиск" title=""
+                                    onkeyup="filterByInput('mark-filter-input', 'mark-filter-marklist')">
+                            <button class="filter-search-close-btn" 
+                                onclick="cleanFilterSearchInput('mark-filter-input', 'mark-filter-marklist')">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Icons">
+                                        <g id="Vector">
+                                            <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="mark-overflow-container" class="filter-overflow-container">
+                            <ul id="mark-filter-marklist" class="filter-mark-list">
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="single-checks" class="single-checks-container">
+                        <div class="single-check-frame" style="margin-top:24px">
+                            <p class="text1-duple" style="margin-bottom:8px;">Совместимость</p>
+                            <label class="filter-single-select-wrapper">
+                                @if ((int)ViewData["WorkWitnCIM_Checked"] == 1)
+                                {
+                                    <input id="Работает с ЦИМ" name="workwithCIM_filter" type="checkbox" class="filter-checkbox" checked
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                    <span class="single-checkmark"></span>
+                                }
+                                else
+                                {
+                                    <input id="Работает с ЦИМ" name="workwithCIM_filter" type="checkbox" class="filter-checkbox"
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                    <span class="single-checkmark"></span>
+                                }
+                                Работает с ЦИМ
+                            </label>
+                        </div>
+                        <div class="single-check-frame" style="margin-top:24px">
+                            <p class="text1-duple" style="margin-bottom:17px;">Публичные списки</p>
+                            <label class="filter-single-select-wrapper">
+                                @if ((int)ViewData["RegReestr_Checked"] == 1)
+                                {
+                                    <input id="В реестре российского ПО" name="regReestr_filter" type="checkbox" class="filter-checkbox" checked
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                    <span class="single-checkmark"></span>
+                                }
+                                else
+                                {
+                                    <input id="В реестре российского ПО" name="regReestr_filter" type="checkbox" class="filter-checkbox"
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                    <span class="single-checkmark"></span>
+                                }
+                                В реестре российского ПО
+                            </label>
+                        </div>
+                        <div class="single-check-frame" style="margin-top:24px">
+                            <label class="filter-single-select-wrapper">
+                                @if ((int)ViewData["IsNotimMember_Checked"] == 1)
+                                {
+                                    <input id="Вендор состоит в НОТИМ" name="isNotimMember_filter" type="checkbox" class="filter-checkbox" checked
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection" />
+                                    <span class="single-checkmark"></span>
+                                }
+                                else
+                                {
+                                    <input id="Вендор состоит в НОТИМ" name="isNotimMember_filter" type="checkbox" class="filter-checkbox"
+                                            onclick="filterSoftwaresSubmitBySingleEntity(this)"
+                                            hx-post="/softwares" hx-vals="" hx-target="#software-collection"/>
+                                    <span class="single-checkmark"></span>
+                                }
+                                Вендор состоит в НОТИМ
+                            </label>
+                        </div>
+                    </div>
+
+                    @* <button id="filter-softwares-button" type="button" class="apply-filter-button" onclick="filterSoftwaresSubmit()"
+                            hx-post="/softwares" hx-vals="" hx-target="#software-collection">
+                        Применить
+                    </button> *@
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <div class="softwares-container">
+                    <div id="softwares-coll-prebtns" class="software-heading-wrapper">
+                        <div class="sort-select">
+                            @if ((int)ViewData["SortType"] == 0)
+                            {
+                                <div class="sort-select-head" onclick="collapseSorSelect(this)">По количеству лайков</div>
+                            }
+                            else if ((int)ViewData["SortType"] == 1)
+                            {
+                                <div class="sort-select-head" onclick="collapseSorSelect(this)">Последние добавления</div>
+                            }
+                            else
+                            {
+                                <div class="sort-select-head" onclick="collapseSorSelect(this)">По названию продукта</div>
+                            }
+                            <ul class="sort-select-list">
+                                <li id="sort-by-like" class="sort-select-item" onclick="sortSoftwaresRequest(this)"
+                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection">По количеству лайков</li>
+                                <li id="sort-by-added" class="sort-select-item" onclick="sortSoftwaresRequest(this)"
+                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection">Последние добавления</li>
+                                <li id="sort-by-name" class="sort-select-item" onclick="sortSoftwaresRequest(this)"
+                                    hx-post="/softwares" hx-vals="" hx-target="#software-collection">По названию продукта</li>
+                            </ul>
+                        </div>
+                        <div>
+                            @if ((bool)ViewData["HasFilters"])
+                            {
+                                <button type="button" class="software-index-share-btn-mobile" onclick="getFiltersShortLink()">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1528_6235)">
+                                            <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.5 21.75C18.1569 21.75 19.5 20.4069 19.5 18.75C19.5 17.0931 18.1569 15.75 16.5 15.75C14.8431 15.75 13.5 17.0931 13.5 18.75C13.5 20.4069 14.8431 21.75 16.5 21.75Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.5 8.25C18.1569 8.25 19.5 6.90685 19.5 5.25C19.5 3.59315 18.1569 2.25 16.5 2.25C14.8431 2.25 13.5 3.59315 13.5 5.25C13.5 6.90685 14.8431 8.25 16.5 8.25Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M13.9773 6.87183L8.52295 10.3781" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M8.52295 13.6218L13.9773 17.1281" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1528_6235">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </button>
+                                <button id="has-filter-mobile-button" class="filter-mobile-button" onclick="openModalFilters()">
+                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 7H2L10 16.46V23L14 25V16.46L22 7Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <circle cx="22" cy="6" r="5" fill="#E61627" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="software-index-share-btn-mobile" onclick="getFiltersShortLink()">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1528_6235)">
+                                            <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.5 21.75C18.1569 21.75 19.5 20.4069 19.5 18.75C19.5 17.0931 18.1569 15.75 16.5 15.75C14.8431 15.75 13.5 17.0931 13.5 18.75C13.5 20.4069 14.8431 21.75 16.5 21.75Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.5 8.25C18.1569 8.25 19.5 6.90685 19.5 5.25C19.5 3.59315 18.1569 2.25 16.5 2.25C14.8431 2.25 13.5 3.59315 13.5 5.25C13.5 6.90685 14.8431 8.25 16.5 8.25Z" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M13.9773 6.87183L8.52295 10.3781" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M8.52295 13.6218L13.9773 17.1281" stroke="#2B2C2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1528_6235">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </button>
+                                <button id="non-filter-mobile-button" class="filter-mobile-button" onclick="openModalFilters()">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="#2B2C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <div id="software-collection">
+                        @{
+                            await Html.RenderPartialAsync("_GetAllSoftwares", Model, ViewData);
+                        }
+                    </div>
+                    <div class="software-pagination">
+                        <div class="spinner-border" id="loading-indicator" role="status" style="display:none">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-filters-modal" class="mobile-filters-modal">
+            <div style="display:flex; justify-content:center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                </svg>
+            </div>
+            <div class="navbar-modal-filters">
+                <p class="text1-duple" style="margin-top:8px; margin-bottom: 0px">Фильтры</p>
+                <button class="close-filter-modal-btn fakefilter_tpl_hamburger fakefilter-sandwichmenu active" type="button" onclick="closeModalFilters()">
+                    <span>
+                        <svg viewBox="100 0 600 600">
+                            <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" class="top"></path>
+                            <path d="M300,320 L540,320" class="middle"></path>
+                            <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" class="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            <div class="mobile-filters-content-wrapper">
+                <p class="text1-duple" style="margin-bottom:5px;">Основная информация</p>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Вендор</button>
+                <div class="filter-accordion-panel-searcher">
+                    <div class="filter-search-wrapper">
+                        <span class="filter-search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <g clip-path="url(#clip0_131_6990)">
+                                    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_131_6990">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input id="company-filter-input-mobile" class="filter-search" type="search" placeholder="Поиск" title=""
+                               onkeyup="filterByInput('company-filter-input-mobile', 'company-filter-marklist-mobile')">
+                        <button class="filter-search-close-btn" onclick="cleanFilterSearchInput('company-filter-input-mobile', 'company-filter-marklist-mobile')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Icons">
+                                    <g id="Vector">
+                                        <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="company-overflow-container-mobile" class="filter-overflow-container">
+                        <ul id="company-filter-marklist-mobile" class="filter-mark-list">
+                            @foreach (var item in ViewData["VendorNames"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["VendorNames_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search checked">
+                                            <input id="@item" name="VendorNames" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)" checked>
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search">
+                                            <input id="@item" name="VendorNames" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)">
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Применение</button>
+                <div id="activity-container-mobile" class="filter-accordion-panel">
+                    <ul class="filter-mark-list" id="activity-filter-marklist-mobile">
+                        @foreach (var item in ViewData["ClassificationActivity"] as IEnumerable<string>)
+                        {
+                            @if ((ViewData["ClassificationActivity_Selected"] as IEnumerable<string>).Contains(item))
+                            {
+                                <li>
+                                    <label class="filter-radio-wrapper checked">
+                                        @item
+                                        <input type="checkbox" name="ClassificationActivity" id="@item" class="filter-radio"
+                                                onchange="markAsCheckedForRadio(this)" hidden checked />
+                                        <span class="fake-radio">
+                                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <label class="filter-radio-wrapper">
+                                        @item
+                                        <input type="checkbox" name="ClassificationActivity" id="@item" class="filter-radio"
+                                               onchange="markAsCheckedForRadio(this)" hidden />
+                                        <span class="fake-radio">
+                                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Тип работы</button>
+                <div id="softwaretype-container-mobile" class="filter-accordion-panel">
+                    <ul class="filter-mark-list" id="softwaretype-filter-marklist-mobile">
+                        @foreach (var item in ViewData["ClassificationSoftwareType"] as IEnumerable<string>)
+                        {
+                            @if ((ViewData["ClassificationSoftwareType_Selected"] as IEnumerable<string>).Contains(item))
+                            {
+                                <li>
+                                    <label class="filter-radio-wrapper checked">
+                                        @item
+                                        <input type="checkbox" name="ClassificationSoftwareType" id="@item" class="filter-radio"
+                                               onchange="markAsCheckedForRadio(this)" hidden checked />
+                                        <span class="fake-radio">
+                                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <label class="filter-radio-wrapper">
+                                        @item
+                                        <input type="checkbox" name="ClassificationSoftwareType" id="@item" class="filter-radio"
+                                               onchange="markAsCheckedForRadio(this)" hidden />
+                                        <span class="fake-radio">
+                                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6138 0.210585C14.0498 0.549578 14.1285 1.17784 13.7895 1.61385L6.01453 11.6138C5.84138 11.8365 5.58223 11.9758 5.30094 11.9972C5.01966 12.0186 4.74242 11.9202 4.53757 11.7262L0.312502 7.72623C-0.0885582 7.34653 -0.105878 6.71361 0.273818 6.31255C0.653514 5.91149 1.28644 5.89417 1.6875 6.27386L5.11216 9.51608L12.2105 0.386246C12.5495 -0.0497617 13.1778 -0.128408 13.6138 0.210585Z" fill="#2B2C2E" />
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Основной продукт</button>
+                <div class="filter-accordion-panel-searcher">
+                    <div class="filter-search-wrapper">
+                        <span class="filter-search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <g clip-path="url(#clip0_131_6990)">
+                                    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_131_6990">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input id="mainproduct-filter-input-mobile" class="filter-search" type="search" placeholder="Поиск" title=""
+                               onkeyup="filterByInput('mainproduct-filter-input-mobile', 'mainproduct-filter-marklist-mobile')">
+                        <button class="filter-search-close-btn" onclick="cleanFilterSearchInput('mainproduct-filter-input-mobile', 'mainproduct-filter-marklist-mobile')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Icons">
+                                    <g id="Vector">
+                                        <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="mainproduct-overflow-container-mobile" class="filter-overflow-container">
+                        <ul id="mainproduct-filter-marklist-mobile" class="filter-mark-list">
+                            @foreach (var item in ViewData["MainProduct"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["MainProduct_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search checked">
+                                            <input id="@item" name="MainProduct" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)" checked>
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search">
+                                            <input id="@item" name="MainProduct" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)">
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="text1-duple" style="margin-top:24px;margin-bottom:8px;">Классификация</p>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Стадия жизненного цикла</button>
+                <div id="stage-container-mobile" class="filter-accordion-panel">
+                    <ul class="filter-mark-list" id="stage-filter-marklist-mobile">
+                        @foreach (var item in ViewData["ClassificationLifeStage"] as IEnumerable<string>)
+                        {
+                            @if ((ViewData["ClassificationLifeStage_Selected"] as IEnumerable<string>).Contains(item))
+                            {
+                                <li>
+                                    <label class="filter-select-wrapper checked">
+                                        <input id="@item" name="ClassificationLifeStage" type="checkbox" class="filter-checkbox" 
+                                            onchange="markAsChecked(this)" checked>
+                                        <span class="checkmark"></span>
+                                        @item
+                                    </label>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <label class="filter-select-wrapper">
+                                        <input id="@item" name="ClassificationLifeStage" type="checkbox" class="filter-checkbox" 
+                                            onchange="markAsChecked(this)">
+                                        <span class="checkmark"></span>
+                                        @item
+                                    </label>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <button type="button" class="filter-accordion-disabled" disabled>Бизнес-процесс</button>
+                <div class="filter-accordion-panel-searcher">
+                    <div class="filter-search-wrapper">
+                        <span class="filter-search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <g clip-path="url(#clip0_131_6990)">
+                                    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_131_6990">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input id="businessprocess-filter-input-mobile" class="filter-search" type="search" placeholder="Поиск" title=""
+                               onkeyup="filterByInput('businessprocess-filter-input-mobile', 'businessprocess-filter-marklist-mobile')">
+                        <button class="filter-search-close-btn" onclick="cleanFilterSearchInput('businessprocess-filter-input-mobile', 'businessprocess-filter-marklist-mobile')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Icons">
+                                    <g id="Vector">
+                                        <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="businessprocess-overflow-container-mobile" class="filter-overflow-container">
+                        <ul id="businessprocess-filter-marklist-mobile" class="filter-mark-list">
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="filter-accordion" onclick="collapseFilterMenu(this)">Класс ПО</button>
+                <div class="filter-accordion-panel-searcher">
+                    <div class="filter-search-wrapper">
+                        <span class="filter-search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <g clip-path="url(#clip0_131_6990)">
+                                    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_131_6990">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input id="content-filter-input-mobile" class="filter-search" type="search" placeholder="Поиск" title=""
+                               onkeyup="filterByInput('content-filter-input-mobile', 'content-filter-marklist-mobile')">
+                        <button class="filter-search-close-btn" onclick="cleanFilterSearchInput('content-filter-input-mobile', 'content-filter-marklist-mobile')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Icons">
+                                    <g id="Vector">
+                                        <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="content-overflow-container-mobile" class="filter-overflow-container">
+                        <ul id="content-filter-marklist-mobile" class="filter-mark-list">
+                            @foreach (var item in ViewData["ClassificationContent"] as IEnumerable<string>)
+                            {
+                                @if ((ViewData["ClassificationContent_Selected"] as IEnumerable<string>).Contains(item))
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search checked">
+                                            <input id="@item" name="ClassificationContent" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)" checked>
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="filter-select-wrapper-for-search">
+                                            <input id="@item" name="ClassificationContent" type="checkbox" class="filter-checkbox" 
+                                                onchange="markAsChecked(this)">
+                                            <span class="checkmark"></span>
+                                            @item
+                                        </label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="filter-accordion-disabled" disabled>Объект воздействия</button>
+                <div id="influence-container-mobile" class="filter-accordion-panel">
+                    <ul class="filter-mark-list" id="influence-filter-marklist-mobile">
+                    </ul>
+                </div>
+                <button type="button" class="filter-accordion-disabled" disabled>Марка проекта</button>
+                <div class="filter-accordion-panel-searcher">
+                    <div class="filter-search-wrapper">
+                        <span class="filter-search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <g clip-path="url(#clip0_131_6990)">
+                                    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                    <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_131_6990">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input id="mark-filter-input-mobile" class="filter-search" type="search" placeholder="Поиск" title=""
+                               onkeyup="filterByInput('mark-filter-input-mobile', 'mark-filter-marklist-mobile')">
+                        <button class="filter-search-close-btn" onclick="cleanFilterSearchInput('mark-filter-input-mobile', 'mark-filter-marklist-mobile')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Icons">
+                                    <g id="Vector">
+                                        <path d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="#E9E9E9" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.997 9.99698L15 14L14.0142 15L10.0001 10.9923L5.98608 15L5.00024 14L9.00327 9.99698L5 6L6 5L10.0001 9.00012L14.0002 5L15.0002 6L10.997 9.99698Z" fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="mark-overflow-container-mobile" class="filter-overflow-container">
+                        <ul id="mark-filter-marklist-mobile" class="filter-mark-list">
+                        </ul>
+                    </div>
+                </div>
+                <div id="single-checks-mobile" class="single-checks-container">
+                    <div class="single-check-frame" style="margin-top:24px">
+                        <p class="text1-duple" style="margin-bottom:8px;">Совместимость</p>
+                        <label class="filter-single-select-wrapper">
+                            @if ((int)ViewData["WorkWitnCIM_Checked"] == 1)
+                            {
+                                <input id="work-cim-mobile" name="WorkCim" type="checkbox" class="filter-checkbox" checked>
+                                <span class="single-checkmark"></span>
+                            }
+                            else
+                            {
+                                <input id="work-cim-mobile" name="WorkCim" type="checkbox" class="filter-checkbox">
+                                <span class="single-checkmark"></span>
+                            }
+                            Работает с ЦИМ
+                        </label>
+                    </div>
+                    <div class="single-check-frame" style="margin-top:24px">
+                        <p class="text1-duple" style="margin-bottom:17px;">Публичные списки</p>
+                        <label class="filter-single-select-wrapper">
+                            @if ((int)ViewData["RegReestr_Checked"] == 1)
+                            {
+                                <input id="registry-has-mobile" name="RegistryHas" type="checkbox" class="filter-checkbox" checked>
+                                <span class="single-checkmark"></span>
+                            }
+                            else
+                            {
+                                <input id="registry-has-mobile" name="RegistryHas" type="checkbox" class="filter-checkbox">
+                                <span class="single-checkmark"></span>
+                            }
+                            В реестре российского ПО
+                        </label>
+                    </div>
+                    <div class="single-check-frame" style="margin-top:24px">
+                        <label class="filter-single-select-wrapper">
+                            @if ((int)ViewData["IsNotimMember_Checked"] == 1)
+                            {
+                                <input id="notim-member-mobile" name="NotimMember" type="checkbox" class="filter-checkbox" checked>
+                                <span class="single-checkmark"></span>
+                            }
+                            else
+                            {
+                                <input id="notim-member-mobile" name="NotimMember" type="checkbox" class="filter-checkbox">
+                                <span class="single-checkmark"></span>
+                            }
+                            Вендор состоит в НОТИМ
+                        </label>
+                    </div>
+                </div>
+
+                @if ((bool)ViewData["HasFilters"])
+                {
+                    <button type="button" class="filter-chip-cleanall-mobile" onclick="cleanAllSoftwareFilters(this)"
+                            hx-post="/softwares" hx-vals="" hx-target="#software-collection">
+                        Очистить все фильтры
+                    </button>
+                }
+
+                <button id="filter-softwares-mobile-button" type="button" class="apply-filter-button" onclick="filterSoftwaresSubmit()"
+                        hx-post="/softwares" hx-vals="" hx-target="#software-collection">
+                    Применить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container p-3 position-fixed top-0 start-50 translate-middle-x">
+    <div id="copy-shortlink-toast" class="toast notify-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <p id="notify-toast-text" class="text4-white"></p>
+        <button class="close-notify-toast" type="button" data-bs-dismiss="toast">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.19635 5.99635L12 10.8L10.817 12L6.00012 7.1907L1.18325 12L0.000244141 10.8L4.8039 5.99635L0 1.2L1.2 0L6.00012 4.80012L10.8002 0L12.0002 1.2L7.19635 5.99635Z" fill="#898989" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.addEventListener('load', () => {
+            sessionStorage.setItem("sort_type", 0);
+            sessionStorage.setItem("current_page", 1);
+
+            intializeFiltersStage();
+            sessionStorage.setItem("is_init", 1);
+        })
+    </script>
+    @* Intialize session storage properties for keeping stage of page *@
+    <script>
+        function intializeFiltersStage() {
+            let company_filter_data = @Html.Raw(Json.Serialize(ViewData["VendorNames_Selected"]));
+            if (company_filter_data != null) {
+                sessionStorage.setItem("company_filter", company_filter_data.join(';'));
+            } else {
+                sessionStorage.setItem("company_filter", "");
+            }
+
+            let activity_filter_data = @Html.Raw(Json.Serialize(ViewData["ClassificationActivity_Selected"]));
+            if (activity_filter_data != null) {
+                sessionStorage.setItem("activity_filter", activity_filter_data.join(';'));
+            } else {
+                sessionStorage.setItem("activity_filter", "");
+            }
+
+            let softwaretype_fiter_data = @Html.Raw(Json.Serialize(ViewData["ClassificationSoftwareType_Selected"]));
+            if (softwaretype_fiter_data != null) {
+                sessionStorage.setItem("softwareType_filter", softwaretype_fiter_data.join(';'));
+            } else {
+                sessionStorage.setItem("softwareType_filter", "");
+            }
+
+            let mainproduct_fiter_data = @Html.Raw(Json.Serialize(ViewData["MainProduct_Selected"]));
+            if (mainproduct_fiter_data != null) {
+                sessionStorage.setItem("mainproduct_filter", mainproduct_fiter_data.join(';'));
+            } else {
+                sessionStorage.setItem("mainproduct_filter", "");
+            }
+
+            let stage_fiter_data = @Html.Raw(Json.Serialize(ViewData["ClassificationLifeStage_Selected"]));
+            if (stage_fiter_data != null) {
+                sessionStorage.setItem("stage_filter", stage_fiter_data.join(';'));
+            } else {
+                sessionStorage.setItem("stage_filter", "");
+            }
+
+            let content_fiter_data = @Html.Raw(Json.Serialize(ViewData["ClassificationContent_Selected"]));
+            if (content_fiter_data != null) {
+                sessionStorage.setItem("content_filter", content_fiter_data.join(';'));
+            } else {
+                sessionStorage.setItem("content_filter", "");
+            }
+
+            let workwithCIM_filter_data = '@ViewData["WorkWitnCIM_Checked"]';
+            if (workwithCIM_filter_data == "1") {
+                sessionStorage.setItem("workwithCIM_filter", 1);
+            } else {
+                sessionStorage.setItem("workwithCIM_filter", 0);
+            }
+
+            let isNotimMember_filter_data = '@ViewData["IsNotimMember_Checked"]';
+            if (isNotimMember_filter_data == "1") {
+                sessionStorage.setItem("isNotimMember_filter", 1);
+            } else {
+                    sessionStorage.setItem("isNotimMember_filter", 0);
+            }
+
+            let regReestr_filter_data = '@ViewData["RegReestr_Checked"]';
+            if (regReestr_filter_data == "1") {
+                sessionStorage.setItem("regReestr_filter", 1);
+            } else {
+                sessionStorage.setItem("regReestr_filter", 0);
+            }
+
+            let searchRequest = '@ViewData["SearchRequest"]';
+            if (searchRequest !== null && searchRequest !== "") {
+                sessionStorage.setItem("search_request", searchRequest);
+            } else {
+                sessionStorage.setItem("search_request", "");
+            }
+        }
+    </script>
+    @* Intialize custom scrollbars (perfect-scrollbar.js) *@
+    <script>
+        var vendorScroll;
+        var vendorScrollMobile;
+        var contentScroll;
+        var contentScrollMobile;
+        var mainproductScroll;
+        var mainproductScrollMobile;
+    </script>
+    @* Custom UI logig for collapse filter menu and update custom scrollbars *@
+    <script>
+        function collapseFilterMenu(el) {
+            el.classList.toggle("active");
+            var panel = el.nextElementSibling;
+            if (panel.style.display == "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+
+                vendorScroll = new PerfectScrollbar('#company-overflow-container');
+                vendorScrollMobile = new PerfectScrollbar('#company-overflow-container-mobile');
+                contentScroll = new PerfectScrollbar('#content-overflow-container');
+                contentScrollMobile = new PerfectScrollbar('#content-overflow-container-mobile');
+                mainproductScroll = new PerfectScrollbar('#mainproduct-overflow-container');
+                mainproductScrollMobile = new PerfectScrollbar('#mainproduct-overflow-container-mobile');
+
+                vendorScroll.update();
+                vendorScrollMobile.update();
+                contentScroll.update();
+                contentScrollMobile.update();
+                mainproductScroll.update();
+                mainproductScrollMobile.update();
+            }
+        }
+    </script>
+    @* Custom UI logic for mark entity as checked for miltiple filters *@
+    <script>
+        function markAsChecked(el) {
+            if (el.checked) {
+                el.parentElement.classList.add('checked');
+            } else {
+                el.parentElement.classList.remove('checked');
+            }
+        }
+    </script>
+    @* Custom UI logic for mark entity as checked for single radio filters *@
+    <script>
+        function markAsCheckedForRadio(el) {
+            var checks = document.getElementsByName(el.name);
+            //debugger;
+            checks.forEach(cb => {
+                if (cb === el) {
+                    //debugger;
+                    if (cb.parentElement.classList.contains('checked')) {
+                        cb.parentElement.classList.remove('checked');
+                    } else {
+                        cb.parentElement.classList.add('checked');
+                    }
+                } else {
+                    cb.checked = false;
+                    cb.parentElement.classList.remove('checked');
+                }
+            });
+        }
+    </script>
+    @* Filter entities by search input and update custom scrollbars *@
+    <script> 
+        function filterByInput(input, markList) {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById(input);
+            filter = input.value.toUpperCase();
+            ul = document.getElementById(markList);
+            li = ul.getElementsByTagName('li');
+
+            var vendorCnt = document.getElementById('company-overflow-container');
+            vendorCnt.scrollTop = 0;
+            var vendorCntMobile = document.getElementById('company-overflow-container-mobile');
+            vendorCntMobile.scrollTop = 0;
+
+            var contentCnt = document.getElementById('content-overflow-container');
+            contentCnt.scrollTop = 0;
+            var contentCntMobile = document.getElementById('content-overflow-container-mobile');
+            contentCntMobile.scrollTop = 0;
+
+            var mainproductCnt = document.getElementById('mainproduct-overflow-container');
+            mainproductCnt.scrollTop = 0;
+            var mainproductCntMobile = document.getElementById('mainproduct-overflow-container-mobile');
+            mainproductCntMobile.scrollTop = 0;
+
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("label")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+
+                    vendorScroll.update();
+                    vendorScrollMobile.update();
+                    contentScroll.update();
+                    contentScrollMobile.update();
+                    mainproductScroll.update();
+                    mainproductScrollMobile.update();
+                } else {
+                    li[i].style.display = "none";
+
+                    vendorScroll.update();
+                    vendorScrollMobile.update();
+                    contentScroll.update();
+                    contentScrollMobile.update();
+                    mainproductScroll.update();
+                    mainproductScrollMobile.update();
+                }
+            }
+        }
+    </script>
+    @* Handle by clean search input and update custom scrollbars *@
+    <script>
+        function cleanFilterSearchInput(input, markList) {
+            var input = document.getElementById(input);
+            input.value = "";
+
+            var ul = document.getElementById(markList);
+            var li = ul.getElementsByTagName('li');
+
+            for (i = 0; i < li.length; i++) {
+                li[i].style.display = "";
+            }
+
+            vendorScroll.update();
+            vendorScrollMobile.update();
+            contentScroll.update();
+            contentScrollMobile.update();
+            mainproductScroll.update();
+            mainproductScrollMobile.update();
+        }
+    </script>
+    @* Handle by sort softwares button: prepare and set parameters for htmx request and a some custom UI logic *@
+    <script>
+        function sortSoftwaresRequest(e) {
+            var sortHead = document.querySelector(".sort-select-head");
+            var sortlist = document.querySelector('.sort-select-list');
+
+            var sortByLikeBtn = document.getElementById("sort-by-like");
+            var sortByAddedBtn = document.getElementById("sort-by-added");
+            var sortByNameBtn = document.getElementById("sort-by-name");
+
+            sessionStorage.setItem("current_page", 1);
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+            //console.log(params);
+            if (e == sortByLikeBtn) {
+                sortHead.textContent = sortByLikeBtn.textContent;
+                sortHead.classList.toggle('open');
+                sortlist.classList.toggle('open');
+
+                params["sort_type"] = 0;
+                sessionStorage.setItem("sort_type", 0);
+                sortByLikeBtn.setAttribute('hx-vals', JSON.stringify(params));
+            }
+            if (e == sortByAddedBtn) {
+                sortHead.textContent = sortByAddedBtn.textContent;
+                sortHead.classList.toggle('open');
+                sortlist.classList.toggle('open');
+
+                params["sort_type"] = 1;
+                sessionStorage.setItem("sort_type", 1);
+                sortByAddedBtn.setAttribute('hx-vals', JSON.stringify(params));
+            }
+            if (e == sortByNameBtn) {
+                sortHead.textContent = sortByNameBtn.textContent;
+                sortHead.classList.toggle('open');
+                sortlist.classList.toggle('open');
+
+                params["sort_type"] = 2;
+                sessionStorage.setItem("sort_type", 2);
+                sortByNameBtn.setAttribute('hx-vals', JSON.stringify(params));
+            }
+        }
+    </script>
+    @* Custom UI logic for sorting menu *@
+    <script>
+        function collapseSorSelect(el) {
+            el.classList.toggle('open');
+            var sortlist = document.querySelector('.sort-select-list');
+            sortlist.classList.toggle('open');
+            //sortlist.style.display = 'block';
+        };
+
+        document.addEventListener('click', function (event) {
+            const sortSelect = document.querySelector('.sort-select');
+
+            if (!sortSelect.contains(event.target)) {
+                const allSortSelectHeads = document.querySelectorAll('.sort-select-head');
+                allSortSelectHeads.forEach(head => {
+                    head.classList.remove('open');
+                });
+
+                const allSortSelectLists = document.querySelectorAll('.sort-select-list');
+                allSortSelectLists.forEach(list => {
+                    list.classList.remove('open');
+                });
+            }
+        });
+    </script>
+    @* Send request for share short link and await responce *@
+    <script>
+        async function getFiltersShortLink() {
+            var stageParams = new URLSearchParams();
+            for (i = 0; i < sessionStorage.length; i++) {
+                var key = sessionStorage.key(i);
+                var value = sessionStorage.getItem(key);
+                stageParams.set(key, value);
+            }
+            const res = await fetch('/shortlink/getfiltersshortlink', {
+                method: 'POST',
+                body: stageParams
+            })
+
+            if (!res.ok) {
+                showNotification('Произошла ошибка. Попробуйте позже');
+                return;
+            }
+
+            const link = await res.text();
+
+            const blob = new Blob([link], { type: "text/plain" });
+            const clipboardText = new ClipboardItem({ 'text/plain': blob });
+            setTimeout(() => {
+                navigator.clipboard.write([clipboardText]);
+                showNotification('Ссылка скопирована в буфер обмена');
+            }, 0);
+        }
+    </script>
+    @* Show notification with text message *@
+    <script>
+        function showNotification(textStatus) {
+            const notification = document.getElementById('copy-shortlink-toast');
+            const message = document.getElementById('notify-toast-text');
+            message.textContent = textStatus;
+
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(notification);
+            toastBootstrap.show();
+        }
+    </script>
+    @* Handle by apply filter button (mobile version): prepare parameters for htmx request *@
+    <script>
+        function filterSoftwaresSubmit() {
+            let work_cim = 0;
+            let isNotim_member = 0;
+            let reg_reestr = 0;
+
+            let company_filter = getDataFromCheckFilter("company-filter-marklist-mobile");
+            sessionStorage.setItem("company_filter", company_filter);
+
+            let activity_filter = getDataFromCheckFilter("activity-filter-marklist-mobile");
+            sessionStorage.setItem("activity_filter", activity_filter);
+
+            let softtype_filter = getDataFromCheckFilter("softwaretype-filter-marklist-mobile");
+            sessionStorage.setItem("softwareType_filter", softtype_filter);
+
+            let mainproduct_filter = getDataFromCheckFilter("mainproduct-filter-marklist-mobile");
+            sessionStorage.setItem("mainproduct_filter", mainproduct_filter);
+
+            let stage_filter = getDataFromCheckFilter("stage-filter-marklist-mobile");
+            sessionStorage.setItem("stage_filter", stage_filter);
+
+            let content_filter = getDataFromCheckFilter("content-filter-marklist-mobile");
+            sessionStorage.setItem("content_filter", content_filter);
+
+            const single_filter_items = document.getElementById("single-checks-mobile");
+            const single_filter_data = Array.from(single_filter_items.querySelectorAll("input"))
+                .map(({ id, checked }) => ({ id, checked }));
+
+            for (let data of single_filter_data) {
+                if (data["id"] == "work-cim-mobile" && data["checked"] == true) {
+                    work_cim = 1;
+                }
+                if (data["id"] == "notim-member-mobile" && data["checked"] == true) {
+                    isNotim_member = 1;
+                }
+                if (data["id"] == "registry-has-mobile" && data["checked"] == true) {
+                    reg_reestr = 1;
+                }
+            }
+            sessionStorage.setItem("workwithCIM_filter", work_cim);
+            sessionStorage.setItem("isNotimMember_filter", isNotim_member);
+            sessionStorage.setItem("regReestr_filter", reg_reestr);
+            sessionStorage.setItem("current_page", 1);
+
+
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+            params["oob_update"] = 1;
+
+            let buttonMobile = document.getElementById("filter-softwares-mobile-button");
+            buttonMobile.setAttribute('hx-vals', JSON.stringify(params));
+            closeModalFilters();
+        }
+    </script>
+    @* Handle by filter entity in list: prepare parameters for htmx request *@
+    <script>
+        function filterSoftwaresSubmitByEntityInList(el) {
+            var filterName = el.getAttribute("name");
+            var filterValue = el.id;
+            //debugger;
+            
+            if (el.checked) {
+                var stage = sessionStorage.getItem(filterName);
+                if (stage == "") {
+                    sessionStorage.setItem(filterName, filterValue);
+                } else {
+                    stage = stage + ';' + filterValue;
+                    sessionStorage.setItem(filterName, stage);
+                }
+            } else {
+                var stage = sessionStorage.getItem(filterName).split(';');
+                if (Array.isArray(stage)) {
+                    stage = stage.filter((item) => item !== filterValue);
+                    sessionStorage.setItem(filterName, stage.join(';'));
+                } else {
+                    sessionStorage.setItem(filterName, "");
+                }
+            }
+
+            sessionStorage.setItem("current_page", 1);
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+
+            params["oob_update"] = 1;
+            el.setAttribute('hx-vals', JSON.stringify(params))
+        }
+    </script>
+    @* Handle by radio filter entity: prepare parameters for htmx request *@
+    <script>
+        function filterSoftwaresSubmitByRadioEntity(el) {
+            var filterName = el.getAttribute("name");
+            var filterValue = el.id;
+            var stage = sessionStorage.setItem(filterName, filterValue);
+
+            sessionStorage.setItem("current_page", 1);
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+
+            params["oob_update"] = 1;
+            el.setAttribute('hx-vals', JSON.stringify(params))
+        }
+    </script>
+    @* Handle by single filter entity: prepare parameters for htmx request *@
+    <script>
+        function filterSoftwaresSubmitBySingleEntity(el) {
+            var filterName = el.getAttribute("name");
+            var stage = sessionStorage.getItem(filterName);
+
+            if (el.checked) {
+                sessionStorage.setItem(filterName, 1);
+            } else {
+                sessionStorage.setItem(filterName, 0);
+            }
+
+            sessionStorage.setItem("current_page", 1);
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+
+            params["oob_update"] = 1;
+            el.setAttribute('hx-vals', JSON.stringify(params))
+        }
+    </script>
+    @* Prapare data of filter *@
+    <script>
+        function getDataFromCheckFilter(element) {
+            let filter_checked = [];
+            const filter_items = document.getElementById(element);
+            //debugger;
+            const filter_data = Array.from(filter_items.querySelectorAll("input"))
+                .map(({ id, checked }) => ({ id, checked }));
+
+            for (let data of filter_data) {
+                if (data["checked"] == true) {
+                    filter_checked.push(data["id"]);
+                }
+            }
+            return filter_checked.join(';');
+        }
+    </script>
+    @* Handle by cleaning all filters button: prepare and set parameters for htmx request *@
+    <script>
+        function cleanAllSoftwareFilters(el) {
+            sessionStorage.setItem("company_filter", "");
+            sessionStorage.setItem("activity_filter", "");
+            sessionStorage.setItem("softwareType_filter", "");
+            sessionStorage.setItem("mainproduct_filter", "");
+            sessionStorage.setItem("stage_filter", "");
+            sessionStorage.setItem("content_filter", "");
+            sessionStorage.setItem("workwithCIM_filter", 0);
+            sessionStorage.setItem("isNotimMember_filter", 0);
+            sessionStorage.setItem("regReestr_filter", 0);
+            sessionStorage.setItem("current_page", 1);
+
+            // Handler for mark filter entity checkboxes as unchecked
+            for (i = 0; i < sessionStorage.length; i++) {
+                if (sessionStorage.key(i).indexOf("_filter") !== -1) {
+                    markAllFilterEntitiesAsUncheckedByFilterName(sessionStorage.key(i));
+                }
+            }
+
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+
+            params["oob_update"] = 1;
+            el.setAttribute('hx-vals', JSON.stringify(params))
+            closeModalFilters();
+        }
+    </script>
+    @* Handle by filter-chip button: prepare and set parameters for htmx request *@
+    <script>
+        function cleanSoftwareFilterByChip(el) {
+            let filterName = el.getAttribute("data-filter-name");
+            let filterValue = el.getAttribute("data-filter-value");
+            let isSingleFilter = el.getAttribute("data-single-filter");
+
+            // Handler for mark filter entity checkbox as unchecked
+            markFilterEntitiesAsUnchecked(filterValue, filterName);
+
+            if (isSingleFilter == "True") {
+                sessionStorage.setItem(filterName, 0);
+                sessionStorage.setItem("current_page", 1);
+            } else {
+                let stage = sessionStorage.getItem(filterName).split(';');
+                //console.log(stage);
+                let newFilterStage = stage.filter((item) => item !== filterValue);
+                //console.log(newFilterStage);
+                
+                sessionStorage.setItem(filterName, newFilterStage.join(';'));
+                sessionStorage.setItem("current_page", 1);
+            }
+
+            const params = {};
+            for (i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                params[key] = value;
+            }
+
+            params["oob_update"] = 1;
+            el.setAttribute('hx-vals', JSON.stringify(params))
+        }
+    </script>
+    @* Custom UI logic for mark filter entity as unchecked by handle filterChip *@
+    <script>
+        function markFilterEntitiesAsUnchecked(filterValue, filterName) {
+            //debugger;
+            var filterEntities = Array.from(document.getElementsByName(filterName))
+                .filter(item => item.id === filterValue)
+                .forEach(item => {
+                    item.parentElement.classList.remove('checked');
+                    item.checked = false;   
+                });
+            //console.log(filterEntities);
+        }
+    </script>
+    @* Custom UI logic for mark ALL filter entities as unchecked by handle filterChipCleanAll *@
+    <script>
+        function markAllFilterEntitiesAsUncheckedByFilterName(filterName) {
+            //debugger;
+            var filterEntities = Array.from(document.getElementsByName(filterName))
+                .forEach(item => {
+                    item.parentElement.classList.remove('checked');
+                    item.checked = false;
+                });
+            //console.log(filterEntities);
+        }
+    </script>
+    @* Handle by close modal window with filters for mobile version of site *@
+    <script>
+        function closeModalFilters() {
+            var mobileFilterModal = document.querySelector(".mobile-filters-modal");
+            mobileFilterModal.style.display = "none";
+        }
+    </script>
+    @* Handle by open modal window with filters for mobile version of site *@
+    <script>
+        function openModalFilters() {
+            var mobileFilterModal = document.querySelector(".mobile-filters-modal");
+            mobileFilterModal.style.display = "none";
+            mobileFilterModal.style.display = "block";
+        }
+    </script>
+    @* Send request to software card *@
+    <script>
+        function getSoftwareCard(input) {
+            console.log(input)
+            $.redirect("/softwares/card", {
+                el_id: input,
+            }, "POST", "_blank");
+        }
+    </script>
+    @* Configure parameters for infinite scrolling htmx request *@
+    <script >
+        window.addEventListener('htmx:configRequest', (e) => {
+            //console.log(e.detail);
+            //console.log(e.detail.elt["className"]);
+            if (e.detail.elt["className"] === "softwares-content-wrapper") {
+                let isInit = sessionStorage.getItem("is_init");
+                if (isInit === "1") {
+                    let page = parseInt(sessionStorage.getItem("current_page"));
+                    sessionStorage.setItem("current_page", page + 1);
+
+                    const params = {};
+                    for (i = 0; i < sessionStorage.length; i++) {
+                        const key = sessionStorage.key(i);
+                        const value = sessionStorage.getItem(key);
+                        params[key] = value;
+                    }
+                    e.detail.parameters = params;      
+                } else {
+                    e.preventDefault();
+                }
+    
+            }
+        });
+    </script>
+    @* Custom UI logic before htmx request *@
+    <script>
+        window.addEventListener('htmx:beforeRequest', (e) => {
+            document.getElementById("loading-indicator").style.display = "inline";
+            document.getElementById("loading-indicator").style.visibility = "visible";
+        });
+    </script>
+    @* Custom UI logic after htmx request *@
+    <script>
+        window.addEventListener('htmx:afterRequest', (e) => {
+            document.getElementById("loading-indicator").style.display = "none";
+            document.getElementById("loading-indicator").style.visibility = "hidden";
+
+            //console.log(e.detail.elt["id"] == "softwares-dynamic-page");
+            if (e.detail.elt["id"] == "softwares-dynamic-page") {
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+}

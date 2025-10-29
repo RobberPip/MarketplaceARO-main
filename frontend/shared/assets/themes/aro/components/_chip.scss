@@ -1,0 +1,31 @@
+.p-chip-text{
+  margin: 0;
+}
+
+.p-chip{
+  background: #E9E9E9
+}
+.p-chips .p-chips-multiple-container .p-chips-token{
+  height: 20px;
+};
+.p-chips .p-chips-multiple-container .p-chips-input-token{
+  padding: 0px;
+  
+}
+.p-chips .p-chips-multiple-container .p-chips-token{
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.p-chips, .p-chips .p-inputtext {
+  width: 100%;
+  box-sizing: border-box;
+}
+.p-chips .p-chips-multiple-container .p-chips-input-token input{
+  font-size: 14px;
+}
+.p-chips .p-chips-multiple-container{
+  height: auto !important;
+}
+.p-chips-multiple-container {
+  row-gap: 4px
+}

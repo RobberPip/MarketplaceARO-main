@@ -1,0 +1,150 @@
+﻿@model VendorVM
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="container-fluid">
+    <div class="render-body">
+        <div class="vendor-wrapper">
+            <button class="software-card-link-button" type="button" id="share-button-link" onclick="showNotificationAndCopyUrl('@Model.ShortLink')">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <g clip-path="url(#clip0_67_8757)">
+                            <path d="M8 20C10.2091 20 12 18.2091 12 16C12 13.7909 10.2091 12 8 12C5.79086 12 4 13.7909 4 16C4 18.2091 5.79086 20 8 20Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22 29C24.2091 29 26 27.2091 26 25C26 22.7909 24.2091 21 22 21C19.7909 21 18 22.7909 18 25C18 27.2091 19.7909 29 22 29Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22 11C24.2091 11 26 9.20914 26 7C26 4.79086 24.2091 3 22 3C19.7909 3 18 4.79086 18 7C18 9.20914 19.7909 11 22 11Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18.6358 9.16248L11.3633 13.8375" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M11.3633 18.1625L18.6358 22.8375" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_67_8757">
+                                <rect width="32" height="32" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </span>
+            </button>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-sm-12 col-md-6 vendor-wrapper-heading">
+                    <div class="vendor-wrapper-logo">
+                        @if (Model.Logo != null)
+                        {
+                            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Logo)" />
+                        }
+                        else
+                        {
+                            <img src="~/img/software default logo.png" />
+                        }
+                    </div>
+                    <div style="padding-left: 16px;">
+                        <h3>@Model.Name</h3>
+                        <p class="text3-gray">@Model.FullName</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <p class="text3 vendor-wrapper-description">@Model.Description</p>
+                </div>
+            </div>
+        </div>
+        <div class="vendor-profile-container">
+            <h5>Профиль</h5>
+            <div class="row vendor-profile-data-container">
+                <div class="col-md-12 col-lg-6">
+                    <h6>Общая информация</h6>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Дата добавления</p>
+                                <p class="text1">@Model.DateToAdd</p>
+                            </div>
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Сайт</p>
+                                @if (Model.LinkTo != "Неопределенно")
+                                {
+                                    <p><a class="text1" href="@Model.LinkTo">@Model.LinkTo</a></p>
+                                }
+                                else
+                                {
+                                    <p class="text1">@Model.LinkTo</p>
+                                }
+                            </div>
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Деятельность</p>
+                                <p class="text1">@Model.VendorActivity</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Нотим</p>
+                                @if (Model.InNOTIM)
+                                {
+                                    <p class="text1">Да</p>
+                                    @* <label class="container-checkbox-custom software-card-checkbox">
+                                        <input type="checkbox" checked disabled>
+                                        <span class="checkmark"></span>
+                                    </label> *@
+                                }
+                                else
+                                {
+                                    <p class="text1">Нет</p>
+                                    @* <label class="container-checkbox-custom software-card-checkbox">
+                                        <input type="checkbox" disabled>
+                                        <span class="checkmark"></span>
+                                    </label> *@
+                                }
+                            </div>
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Наличие ПО</p>
+                                <p class="text1">Да</p>
+                            </div>
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">ПО в РосРеестре:</p>
+                                <p class="text1"> @(Model.CountSoftwaresInRosReestr) шт</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <h6>Оценка вендора</h6>
+                    <div class="row">
+                        <div class="col">
+                            <div class="vendor-profile-data-wrapper-column">
+                                <p class="text3-gray" style="margin-bottom: 0px;">Средняя оценка ПО:</p>
+                                <p class="text1">В разработке</p>
+                            </div>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Toast notification: copy to clipboard *@
+<div class="toast-container p-3 position-fixed top-0 start-50 translate-middle-x">
+    <div id="copy-shortlink-toast" class="toast notify-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <p id="notify-toast-text" class="text4-white"></p>
+        <button class="close-notify-toast" type="button" data-bs-dismiss="toast">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.19635 5.99635L12 10.8L10.817 12L6.00012 7.1907L1.18325 12L0.000244141 10.8L4.8039 5.99635L0 1.2L1.2 0L6.00012 4.80012L10.8002 0L12.0002 1.2L7.19635 5.99635Z" fill="#898989" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    @* Show notification and copy url *@
+    <script>
+        function showNotificationAndCopyUrl(input) {
+            const notification = document.getElementById('copy-shortlink-toast');
+            const message = document.getElementById('notify-toast-text');
+            message.textContent = "Ссылка скопирована в буфер обмена";
+            navigator.clipboard.writeText(input);
+
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(notification);
+            toastBootstrap.show();
+        }
+    </script>
+}

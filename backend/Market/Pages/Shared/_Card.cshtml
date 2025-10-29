@@ -1,0 +1,16 @@
+@model Tuple<string, string>
+
+<div class="card">
+    <div class="p-card p-component" data-pc-name="card" data-pc-section="root">
+        <div class="p-card-body" data-pc-section="body">
+            <div class="p-card-title" data-pc-section="title">
+                @Model.Item1 
+            </div>
+            <div class="p-card-content" data-pc-section="content">
+                <p class="m-0">
+                    @Model.Item2 
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

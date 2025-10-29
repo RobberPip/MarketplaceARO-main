@@ -1,0 +1,24 @@
+.p-datatable-thead > tr > th {
+  background-color: transparent;
+  padding: 6px 16px;
+}
+
+.p-column-header-content {
+  font-weight: 400;
+  color: #898989;
+  font-size: 13px;
+}
+
+.p-datatable-tbody > tr {
+  background-color: transparent;
+
+  & > td {
+    font-weight: 400;
+    font-size: 14px;
+    padding: 14px 16px;
+  }
+
+  &.p-highlight {
+    color: #2B2C2E;
+  }
+}

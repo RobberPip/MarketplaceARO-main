@@ -1,0 +1,66 @@
+.p-button {
+  font-weight: 500;
+  font-size: 14px;
+
+  width: max-content;
+  padding: 6px 16px;
+}
+.p-button.p-button-rounded {
+  border-radius: 100px;
+}
+
+// themes
+.p-button {
+  border-radius: 10px;
+}
+
+.p-button-secondary {
+  color: #2B2C2E;
+  background-color: #ffffff;
+  border: 1px solid #BCBCBC;
+
+  &:hover {
+    background-color: #FBFBFB;
+    border-color: #2B2C2E;
+  }
+}
+
+.p-button-danger {
+  color: #D71424;
+  background-color: #FFF9F9;
+  border: 1px solid #FF6571;
+
+  &:hover {
+    background-color: #FFE6E8;
+    border-color: #D71424;
+  }
+}
+
+.p-button-info {
+  color: #2B2C2E;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    background-color: #E9E9E9;
+  }
+}
+
+.p-button-outlined {
+  color: #2B2C2E;
+  background-color: #ffffff;
+  border: 1px solid #BCBCBC;
+
+  &:hover {
+    border-color: #2B2C2E;
+    background-color: #FBFBFB;
+  }
+}
+
+// sizes
+.p-button-lg {
+  font-weight: 600;
+  font-size: 16px;
+
+  padding: 13px 32px;
+}

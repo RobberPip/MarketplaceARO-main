@@ -1,0 +1,60 @@
+.has-search .form-control {
+    padding-left: 42px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: rgb(73, 80, 87);
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 130% !important; /* 22.1px */
+    letter-spacing: 0.34px !important;
+    border: 1px solid !important;
+    border-color: #2B2C2E !important;
+}
+
+#header-searcher {
+    margin-top:10px !important;
+    margin-bottom:10px !important;
+}
+
+
+/*Logo for search input*/
+.form-group-navbar .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    padding-left: 12px;
+    padding-top: 15px;
+    color: #BCBCBC !important;
+    pointer-events: none;
+}
+.form-group-frame-box .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    padding-left: 12px;
+    padding-top: 5px;
+    color: #BCBCBC !important;
+    pointer-events: none;
+}
+
+
+.has-search .search-wrapper {
+    position: relative;
+}
+
+.has-search .close-icon {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    height: 10px !important;
+    width: 10px !important;
+    right: 15px;
+    bottom: 9px;
+    box-shadow: none !important;
+}
+
+.mysearcher:not(:valid) ~ .close-icon {
+    display: none;
+}

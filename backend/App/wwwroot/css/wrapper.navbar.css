@@ -1,0 +1,36 @@
+/*Wrappers for header*/
+.form-group-navbar {
+    padding-left: 10%;
+    padding-right: 20%;
+    width: 100%;
+    transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+}
+@media screen and (max-width: 960px) {
+    .form-group-navbar {
+        padding-right: 10%;
+    }
+}
+@media screen and (max-width: 835px) {
+    .form-group-navbar {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+@media screen and (max-width: 575px) {
+    .form-group-navbar {
+        display: none;
+    }
+    .form-group-navbar.active {
+        display: inline-block;
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+}
+
+.navbar-buttons-wrapper {
+    display:flex;
+    flex-direction:row;
+}

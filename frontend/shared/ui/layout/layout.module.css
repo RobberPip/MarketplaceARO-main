@@ -1,0 +1,30 @@
+.layout {
+}
+
+.layout > * {
+  padding-left: calc(var(--pico-spacing) * 3);
+  padding-right: calc(var(--pico-spacing) * 3);
+}
+
+.layout header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  z-index: 1000;
+  overflow: visible;
+}
+
+.layout .content {
+  display: flex;
+}
+.layout main {
+  width: 100%;
+}
+
+.layout aside {
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+}

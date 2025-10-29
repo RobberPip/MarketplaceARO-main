@@ -1,0 +1,305 @@
+/*Buttons with mark classification on index page*/
+.fast-button {
+    width: 100%;
+    height: 64px;
+    position: relative;
+    border-radius: 18px !important;
+    border: 2px solid;
+    border-color: #2B2C2E;
+    background: #f6f6f6;
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 22px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+    white-space: nowrap;
+    text-align: start !important;
+    padding-left:24px !important;
+}
+.fast-button:hover,
+.fast-button:hover svg {
+    background-color: #3D3B3C !important;
+    color: #ffffff !important;
+}
+
+.fast-button svg {
+    position: absolute;
+    right: 16px !important;
+    bottom: 16px !important;
+    color: #2b2c2e !important
+}
+
+
+/*Small button for recently added softwares on index page*/
+.fast-button-small {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 45px;
+    border-radius: 24px;
+    border: 1px solid;
+    border-color: #494a52;
+    background: #fff;
+    color: #2B2C2E !important;
+    font-family: 'SF Pro Display', sans-serif !important;
+    font-size: 22px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 140% !important; /* 30.8px */
+    letter-spacing: 0.44px !important;
+    white-space: nowrap;
+    text-align: start;
+}
+.fast-button-small:hover {
+    background-color: #494a52 !important;
+    color: #ffffff !important;
+}
+
+
+/*Apply button for filter*/
+.apply-filter-button {
+    height: 48px;
+    width: 100%;
+    padding-inline: 24px;
+    border-radius: 100px;
+    border: 1px solid;
+    border-color: #494a52;
+    background-color: #494a52;
+    color: #ffffff;
+
+    font-family: SF Pro Display;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 30.8px */
+    letter-spacing: 0.44px;
+}
+
+
+/*Open filters for mobile*/
+.filter-mobile-button {
+    border: none !important;
+    background: none !important;
+}
+@media screen and (min-width: 992px) {
+    .filter-mobile-button {
+        display: none;
+    }
+}
+/*Close filters for mobile*/
+.close-filter-modal-btn {
+    position:absolute;
+    top: 14px;
+    right: 22px;
+    border: none !important;
+    background: none !important;
+}
+
+/*Pagination button*/
+.btn-outline-dark {
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
+    border: none;
+    font-family: "SF Pro Display-Regular", Helvetica;
+    font-weight: 400;
+    font-size: 18px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+
+
+/*Software card button for share*/
+.software-card-link-button {
+    position: absolute !important;
+    top: 32px !important;
+    right: 24px !important;
+    border: none !important;
+    background: none !important;
+    z-index: 2;
+}
+
+/*Software card button to outside site*/
+.software-card-link {
+    border: none;
+    background: none;
+    color: #898989 !important;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+.software-card-link:hover {
+    border: none;
+    color: #2B2C2E !important;
+}
+.link-to-vendor {
+
+}
+.link-to-vendor:hover {
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+
+.filter-chip {
+    position: relative;
+    margin-right: 8px !important;
+    margin-bottom:16px !important;
+    padding-left: 12px;
+    padding-right: 40px;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    border-radius: 50px;
+    border: 1px solid #e9e9e9;
+    background-color: #e9e9e9;
+    color: #2b2c2e !important;
+    font-family: SF Pro Display !important;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 30.8px */
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+/*.filter-chip:hover {
+    border: 1px solid #bcbcbc;
+    background-color: #bcbcbc;
+    color: #2b2c2e !important;
+}*/
+
+.filter-chip span {
+    position: absolute;
+    top: 5px !important;
+    right: 14px !important;
+    color: #898989 !important;
+}
+@media screen and (max-width: 991px) {
+    .filter-chip {
+        display: none;
+    }
+}
+
+.filter-chip-cleanall {
+    position: relative;
+    margin-bottom: 16px !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    border-radius: 50px;
+    border: 1px solid #2b2c2e !important;
+    background-color: #fff !important;
+    color: #2b2c2e !important;
+    font-family: SF Pro Display !important;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 30.8px */
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+.filter-chip-cleanall-mobile {
+    position: relative;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 50px;
+    border: 2px solid #3d3b3c !important;
+    background-color: #fff !important;
+    color: #2b2c2e !important;
+    font-family: SF Pro Display !important;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%; /* 30.8px */
+    letter-spacing: 0.02em;
+    text-align: center !important;
+    cursor: pointer;
+}
+
+.software-index-share-btn {
+    position: absolute;
+    z-index: 2;
+    margin-bottom: 16px !important;
+    top: 0px !important;
+    right: 0px !important;
+    width: 32px !important;
+    height: 32px !important;
+    border: none;
+    background: none;
+    color: #898989 !important;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 991px) {
+    .filter-chip,
+    .filter-chip-cleanall,
+    .software-index-share-btn {
+        display: none;
+    }
+}
+
+.software-index-share-btn-mobile {;
+    margin-right: 10px !important;
+    padding: 0px !important;
+    width: 24px !important;
+    height: 24px !important;
+    border: none;
+    background: none;
+    color: #898989 !important;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 991px) {
+    .software-index-share-btn-mobile {
+        display: none;
+    }
+}
+
+/*Modal Notifications*/
+.notify-toast {
+    position: relative;
+    background: #2b2c2e !important;
+    border: #2b2c2e !important;
+    border-radius: 24px !important;
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+    padding-left: 24px !important;
+    padding-right: 53px !important;
+    width: 350px !important;
+    max-width: 350px !important;
+}
+.close-notify-toast {
+    position: absolute;
+    background: none !important;
+    border: none !important;
+    width: 12px !important;
+    height: 12px !important;
+    color: #898989 !important;
+    top: calc(50% - 13px) !important;
+    right: 29px !important;
+}
+
+
+
+
+
+
+
+/*Software card accordion button*/
+.software-data-accordion {
+    margin-left: -6px;
+    margin-right: -10px;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: none !important;
+}
+.accordion-header {
+    box-shadow: none !important;
+    outline: none !important;
+}

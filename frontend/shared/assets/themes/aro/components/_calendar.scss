@@ -1,0 +1,33 @@
+.p-calendar {
+  & > .p-inputtext {
+    padding-left: 16px;
+    padding-right: 35px;
+  }
+
+  &:hover {
+    & > .p-datepicker-trigger{
+      color: #2B2C2E;
+    }
+  }
+}
+
+.p-datepicker-trigger {
+  position: absolute;
+  right: 10px;
+  bottom: 50%;
+  transform: translateY(50%);
+
+  height: 20px;
+  width: 20px!important;
+  padding: 0!important;
+  background-color: transparent;
+  border: none;
+  border-radius: 0!important;
+
+  color: #898989;
+
+  & > .p-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

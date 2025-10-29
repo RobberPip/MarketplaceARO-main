@@ -1,0 +1,376 @@
+﻿@model SoftwareVM
+@{
+    ViewData["Title"] = @Model.Name;
+}
+<div class="software-card-page-container">
+<div class="container-fluid">
+    <div class="render-body">
+        <div class="software-frame-box">
+                <button class="software-card-link-button" type="button" id="share-button-link" onclick="showNotificationAndCopyUrl('@Model.ShortLink')">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <g clip-path="url(#clip0_67_8757)">
+                                <path d="M8 20C10.2091 20 12 18.2091 12 16C12 13.7909 10.2091 12 8 12C5.79086 12 4 13.7909 4 16C4 18.2091 5.79086 20 8 20Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 29C24.2091 29 26 27.2091 26 25C26 22.7909 24.2091 21 22 21C19.7909 21 18 22.7909 18 25C18 27.2091 19.7909 29 22 29Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M22 11C24.2091 11 26 9.20914 26 7C26 4.79086 24.2091 3 22 3C19.7909 3 18 4.79086 18 7C18 9.20914 19.7909 11 22 11Z" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.6358 9.16248L11.3633 13.8375" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.3633 18.1625L18.6358 22.8375" stroke="#494A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_67_8757">
+                                    <rect width="32" height="32" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </span>
+            </button>
+            <div class="software-card-container">
+                <h3 style="max-width: 85%;">@Model.Name</h3>
+                    <div style="display:flex; flex-direction:column; max-width: 85%">
+                    @foreach (var vendor in Model.Vendors)
+                    {
+                        <a class="text2-gray link-to-vendor" onclick="getVendorCard('@vendor.Id')">@vendor.Name</a>
+                    }
+                </div>
+                <div class="cost-software-title">
+                    <h6>По запросу</h6>
+                    <a href="@Model.LinkTo" class="software-card-link" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
+                        </svg>
+                    </a>
+                     @if (!ViewBag.IsAuthenticated) {
+                        <svg style="margin-left:10px;margin-right:4px" width="30px" height="30px" viewBox="0 0 24 24"
+                         fill="none" stroke="#898989"
+                         xmlns="http://www.w3.org/2000/svg"
+                         onclick="toggleLike(event, @Model.Id, this)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                              fill="none" stroke="#898989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>}
+                    else {
+                    <svg style="margin-left:10px;margin-right:4px" width="30px" height="30px" viewBox="0 0 24 24"
+                         fill="@(Model.IsLiked ? "currentColor" : "none")"
+                         xmlns="http://www.w3.org/2000/svg"
+                         onclick="toggleLike(event, @Model.Id, this)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                              stroke="@(Model.IsLiked ? "none" : "#000000")" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    }
+                    <p id="like-count-@Model.Id"  style="margin:0px;"class="text2-gray">
+                        @Model.LikeCount
+                    </p>
+                </div>
+                    <div style="margin:auto; border-bottom: 2px solid; border-color: #898989"></div>
+                <div class="accordion software-data-accordion" id="specification-software-data">
+                    <div class="accordion-item software-data-accordion">
+                        <h6 class="accordion-header">
+                            <button class="accordion-button collapsed software-data-accordion" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#software-specification-collapse">
+                                <h6>Характеристики ПО</h6>
+                            </button>
+                        </h6>
+                        <div id="software-specification-collapse" class="accordion-collapse collapse show">
+                            <div class="accordion-body" style="padding-left:10px">
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Производитель</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        @foreach (var vendor in Model.Vendors)
+                                        {
+                                            <p class="text3 software-dataframe-text">@vendor.Name</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Тип работы</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3 software-dataframe-text">@Model.SoftwareInstallationType</p>
+                                    </div>
+                                </div>
+                                <h6 style="padding-top: 25px; padding-bottom: 15px;">Классификация</h6>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Применение</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3 software-dataframe-text">@Model.SoftwareActivityType</p>
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Cтадия жизненного цикла</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        @foreach (var item in Model.ClassificationLifeStage)
+                                        {
+                                            <p class="text3 software-dataframe-text">@item</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Бизнес-процесс</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3-gray software-dataframe-text">В разработке</p>
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Класс</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3 software-dataframe-text">@Model.ClassificationContent</p>
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Объект воздействия</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3-gray software-dataframe-text">В разработке</p>
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Марка проекта</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3-gray software-dataframe-text">В разработке</p>
+                                    </div>
+                                </div>
+                                <h6 style="padding-top: 25px; padding-bottom: 15px;">Совместимость</h6>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Работает с ЦИМ</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        @if (Model.WorkWitnCIM)
+                                        {
+                                            <p class="text3 software-dataframe-text">Да</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" checked disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                        else
+                                        {
+                                            <p class="text3 software-dataframe-text">Нет</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Зарубежные аналоги</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3-gray software-dataframe-text">В разработке</p>
+                                    </div>
+                                </div>
+                                <h6 style="padding-top: 25px; padding-bottom: 15px;">Публичные списки</h6>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">В реестре НОТИМ</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        @if (Model.InHasNotim)
+                                        {
+                                            <p class="text3 software-dataframe-text">Да</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" checked disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                        else
+                                        {
+                                            <p class="text3 software-dataframe-text">Нет</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">В реестре отечественного ПО</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        @if (Model.RegRosreestr)
+                                        {
+                                            <p class="text3 software-dataframe-text">Да</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" checked disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                        else
+                                        {
+                                            <p class="text3 software-dataframe-text">Нет</p>
+                                            @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                                <input type="checkbox" disabled>
+                                                <span class="checkmark"></span>
+                                            </label> *@
+                                        }
+                                    </div>
+                                </div>
+                                @if (Model.RegRosreestr)
+                                {
+                                    <div class="row software-data-frame">
+                                        <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                            <p class="text3 software-dataframe-text">Код записи в реестре</p>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                            <p class="text3 software-dataframe-text">@Model.RegRosreestrNumber</p>
+                                        </div>
+                                    </div>
+                                    <div class="row software-data-frame">
+                                        <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                            <p class="text3 software-dataframe-text">Имя в реестре</p>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                            <p class="text3 software-dataframe-text">@Model.RegRosreestrName</p>
+                                        </div>
+                                    </div>
+                                }
+                                <h6 style="padding-top: 25px; padding-bottom: 15px;">Поддержка и подтверждение</h6>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Подтвержденно разработчиком</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3 software-dataframe-text">Да</p>
+                                        @* <label class="container-checkbox-custom software-card-checkbox" style="margin-left: 15px; margin-top: -13px;">
+                                            <input type="checkbox" checked disabled>
+                                            <span class="checkmark"></span>
+                                        </label> *@
+                                    </div>
+                                </div>
+                                <div class="row software-data-frame">
+                                    <div class="col-sm-12 col-md-6 software-data-frame-left">
+                                        <p class="text3 software-dataframe-text">Подтвержденно пользователями</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 software-data-frame-right">
+                                        <p class="text3-gray software-dataframe-text">В разработке</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin:auto; border-bottom: 2px solid; border-color: #898989"></div>
+                <div class="accordion software-data-accordion" id="description-software-data">
+                    <div class="accordion-item software-data-accordion">
+                        <h6 class="accordion-header">
+                            <button class="accordion-button collapsed software-data-accordion" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#software-description-collapse" aria-expanded="false">
+                                <h6>Описание продукта</h6>
+                            </button>
+                        </h6>
+                        <div id="software-description-collapse" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <p class="text3 software-dataframe-text">@Model.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+@* Toast notification: copy to clipboard *@
+<div class="toast-container p-3 position-fixed top-0 start-50 translate-middle-x">
+    <div id="copy-shortlink-toast" class="toast notify-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <p id="notify-toast-text" class="text4-white"></p>
+        <button class="close-notify-toast" type="button" data-bs-dismiss="toast">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.19635 5.99635L12 10.8L10.817 12L6.00012 7.1907L1.18325 12L0.000244141 10.8L4.8039 5.99635L0 1.2L1.2 0L6.00012 4.80012L10.8002 0L12.0002 1.2L7.19635 5.99635Z" fill="#898989" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function getVendorCard(input) {
+            $.redirect("/vendor/card", {
+                el_id: input,
+            }, "POST", "_blank");
+        }
+    </script>
+    @* Functions update likes *@
+    <script>
+        function toggleLike(event, softwareId, element) {
+            if (!@Json.Serialize(ViewBag.IsAuthenticated)) {
+                return;
+            }
+            let isLiked = element.getAttribute("fill") === "currentColor";
+            let newFill = isLiked ? "none" : "currentColor";
+            let newStroke = isLiked ? "#000000" : "none";
+
+            element.setAttribute("fill", newFill);
+            let path = element.querySelector("path");
+            if (path) {
+                path.setAttribute("stroke", newStroke);
+            }
+
+            sendLikeRequest(softwareId, !isLiked, element);
+        }
+
+        function sendLikeRequest(softwareId, like, element) {
+            fetch('/api/v1/like-software', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "softwareId": softwareId,
+                    "like": like
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateLikeCount(softwareId, data.likeCount);
+                })
+        }
+
+        function updateLikeCount(softwareId, likeCount) {
+            let likeText = document.querySelector(`#like-count-${softwareId}`);
+            let separator = document.querySelector(`#like-separator-${softwareId}`);
+            let vendorName = document.querySelector(`#vendor-name-${softwareId}`);
+
+            if (likeText) {
+                likeText.textContent = `${likeCount}`;
+            }
+
+
+            if (vendorName && vendorName.textContent.trim() !== "") {
+                separator.style.display = 'inline';
+            }
+        }
+
+    </script>
+    @* Show notification and copy url *@
+    <script>
+        function showNotificationAndCopyUrl(input) {
+            const notification = document.getElementById('copy-shortlink-toast');
+            const message = document.getElementById('notify-toast-text');
+            message.textContent = "Ссылка скопирована в буфер обмена";
+            navigator.clipboard.writeText(input);
+
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(notification);
+            toastBootstrap.show();
+        }
+    </script>
+}

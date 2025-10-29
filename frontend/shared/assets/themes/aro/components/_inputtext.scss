@@ -1,0 +1,13 @@
+.p-inputtext {
+  border-radius: 10px;
+  padding: 6px 12px 6px 12px !important;
+  font-size: 14px;
+  width: 100%;
+}
+.p-inputtext.p-invalid.p-component{
+  border: 1px solid #e4677e;
+}
+.p-inputtext:not(textarea):not(.p-placeholder) {
+  display: flex;
+  align-items: center;
+}

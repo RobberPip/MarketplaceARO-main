@@ -1,0 +1,37 @@
+﻿@model FilterStageVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Redirect</title>
+    </head>
+    <body>
+        <div>
+            <form id="hidden-filter-form" method="post" asp-controller="softwares" asp-action="index">
+                <input type="hidden" name="company_filter" value="@string.Join(';', Model.Companies)" />
+                <input type="hidden" name="activity_filter" value="@Model.Activity" />
+                <input type="hidden" name="softwareType_filter" value="@Model.SoftwareType" />
+                <input type="hidden" name="mainproduct_filter" value="@string.Join(';', Model.MainProducts)" />
+                <input type="hidden" name="stage_filter" value="@string.Join(';', Model.Stages)" />
+                <input type="hidden" name="content_filter" value="@string.Join(';', Model.Contents)" />
+                <input type="hidden" name="workwithCIM_filter" value="@Model.WorkWithCim" />
+                <input type="hidden" name="regReestr_filter" value="@Model.RegReestr" />
+                <input type="hidden" name="isNotimMember_filter" value="@Model.IsNotimMember" />
+                <input type="hidden" name="search_request" value="@Model.SearchRequest" />
+            </form>
+        </div>
+
+        <script>
+            window.addEventListener('load', () => {
+                var formFiltersData = document.getElementById('hidden-filter-form');
+                formFiltersData.submit();
+            });
+        </script>
+    </body>
+</html>

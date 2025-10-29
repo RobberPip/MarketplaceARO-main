@@ -1,0 +1,105 @@
+/*Wrappers for registry software heading*/
+.registry-heading-container {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+@media screen and (max-width: 640px) {
+    .registry-heading-container {
+        padding-top: 16px;
+    }
+}
+
+.inline-cheaps-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.software-heading-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content:end;
+    align-items: center;
+}
+@media screen and (max-width: 991px) {
+    .software-heading-wrapper {
+        flex-direction:row;
+        justify-content:space-between;
+    }
+}
+
+
+
+
+
+
+
+/*Wrappers for software list and card*/
+.softwares-content-wrapper {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.software-tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+.software-link {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 24px;
+    height: 24px;
+    color: #2b2c2e !important;
+}
+@media screen and (max-width: 640px) {
+    .software-link {
+        top: 28px;
+        right: 28px;
+        width: 16px;
+        height: 16px;
+    }
+}
+
+
+/*Wrappers for software filter*/
+.filter-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-bottom: 64px;
+}
+@media screen and (max-width: 1350px) {
+    .filter-content-wrapper {
+        width: 100%
+    }
+}
+@media screen and (max-width: 991px) {
+    .filter-content-wrapper {
+        display:none;
+        /*visibility:hidden;*/
+    }
+}
+
+/*Wrappers for software pagination*/
+.software-pagination {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.inline-cheaps-container {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items: flex-start;
+    position:relative;
+    margin-top:16px !important;
+    padding-right: 32px !important;
+}
+
+.single-checks-container {
+    margin-bottom:40px !important;
+}

@@ -1,0 +1,95 @@
+{
+	"$schema": "https://lnav.org/schemas/format-v1.schema.json",
+	"market_app": {
+		"title": "Custom JSON Logs",
+		"description": "Parse custom JSON log entries",
+		"timestamp-field": "timestamp",
+		"level-field": "level",
+		"body-field": "message",
+		"file-type": "json",
+		"hide-extra": false,
+		"ordered-by-time": true,
+		"value": {
+			"trace_id": {
+				"kind": "string"
+			},
+			"fields": {
+				"kind": "json",
+				"hidden": true
+			},
+			"fields/StatusCode": {
+				"kind": "integer"
+			},
+			"fields/Method": {
+				"kind": "string"
+			},
+			"program": {
+				"kind": "json",
+				"hidden": true
+			},
+			"program/pid": {
+				"kind": "integer"
+			},
+			"program/name": {
+				"kind": "string"
+			},
+			"git": {
+				"kind": "json",
+				"hidden": true
+			},
+			"git/branch": {
+				"kind": "string"
+			},
+			"git/commit": {
+				"kind": "string"
+			}
+		},
+		"line-format": [
+			{
+				"prefix": "[",
+				"field": "__timestamp__",
+				"suffix": "]"
+			},
+			{
+				"prefix": " ",
+				"field": "trace_id"
+			},
+			{
+				"prefix": " ",
+				"field": "level"
+			},
+			{
+				"prefix": " ",
+				"field": "fields/Method",
+				"default-value": " - "
+			},
+			{
+				"prefix": " ",
+				"field": "fields/StatusCode",
+				"default-value": " - "
+			},
+			{
+				"prefix": " ",
+				"field": "message"
+			},
+			{
+				"prefix": " [",
+				"field": "program/pid"
+			},
+			{
+				"prefix": ",",
+				"field": "program/name",
+				"suffix": "]"
+			},
+			{
+				"prefix": " (",
+				"field": "git/branch"
+			},
+			{
+				"prefix": ",",
+				"field": "git/commit",
+				"suffix": ")"
+			}
+		]
+	}
+}

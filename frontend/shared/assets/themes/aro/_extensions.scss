@@ -1,0 +1,11 @@
+/* Customizations to the designer theme should be defined here */
+.main-content-profile {
+  margin-left: 32px;
+  margin-right: 64px;
+  transition: margin-left 0.2s;
+}
+// @media (min-width: 1441px) {
+//   .main-content-profile {
+//     margin-right: auto;
+//   }
+// }

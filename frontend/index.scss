@@ -1,0 +1,22 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background: #FBFBFB;
+}
+
+// ::-webkit-scrollbar {
+// 	width: 6px;
+// }
+
+::-webkit-scrollbar-thumb {
+	background: #a9a9a9;
+	border-radius: 8px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@import "shared/assets/themes/aro/theme.scss";
+@import "shared/assets/icons.css";

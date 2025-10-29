@@ -1,0 +1,271 @@
+﻿@model IEnumerable<SoftwareVM>
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="container-fluid">
+    <div class="render-body">
+        <div class="frame-box">
+            <div class="frame-box-content">
+                <h2>Перечень цифровых продуктов для строительства</h2>
+                <h5 style="margin-top:24px;">информационный ресурс, объединяющий более девятиста отечественных программных продуктов, платформ и систем</h5>
+                <div class="has-search form-group-frame-box">
+                    <span class="form-control-feedback">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <g clip-path="url(#clip0_131_6990)">
+                                <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                                <path d="M13.1695 13.1696L17.5 17.5" stroke="#898989" stroke-linecap="square" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_131_6990">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </span>
+                    <div class="search-wrapper">
+                        <input id="main-searcher" class="form-control mysearcher border-end-0 shadow-none border rounded-pill mr-sm-2"
+                               type="search" required placeholder="Поиск отечественного ПО" title="">
+                        <button id="close-icon-main" class="close-icon btn-close" onclick="clearSearchInput('main-searcher')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row fast-button-box">
+            <div class="col-md-6 col-xl-3 fast-button-container">
+                <button type="button" class="fast-button" onclick="getSoftwaresByFastButton('ПРОЕКТИРОВАНИЕ')">
+                    Проектирование
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-6 col-xl-3 fast-button-container">
+                <button type="button" class="fast-button" onclick="getSoftwaresByFastButton('СТРОИТЕЛЬСТВО')">
+                    Строительство
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-6 col-xl-3 fast-button-container">
+                <button type="button" class="fast-button" onclick="getSoftwaresByFastButton('ЭКСПЛУАТАЦИЯ')">
+                    Эксплуатация
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-6 col-xl-3 fast-button-container">
+                <button type="button" class="fast-button" onclick="getSoftwaresByFastButton('ЦИМ')">
+                    Работа с ЦИМ
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 90px">
+            <div class="col-sm-12 col-md-6">
+                <h1>@ViewData["SoftwaresRoundCount"]+</h1>
+                <p class="text2">Цифровых продуктов в едином перечне</p>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <p class="text1 summary-text">
+                    Мы собрали в одном месте понятную классификацию программных продуктов, средств автоматизации и 
+                    цифровизации строительной сферы, чтобы каждый участник процесса смог определить потребность в том или ином ПО.
+                </p>
+                <p class="text1 summary-text">
+                    Каждый желающий сможет разместить своё разработанное или поставляемое решение на портале.
+                </p>
+            </div>
+        </div>
+        <div style="margin-top: 100px" id="opportunity-block">
+            <h3>Возможности</h3>
+            <div class="row" style="margin-top: 50px">
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <img width="100" height="100" src="~/img/opportunity-light.png" />
+                    <h6>Актуальность</h6>
+                    <p class="text2">непрерывное пополнение реестра ARO</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <img width="100" height="100" src="~/img/opportunity-light.png" />
+                    <h6>Цифровизация</h6>
+                    <p class="text2">больше не нужно скачивать Eхсel-таблицы</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <img width="100" height="100" src="~/img/opportunity-light.png" />
+                    <h6>Быстрый поиск</h6>
+                    <p class="text2">удобный поиск по актуальным фильтрам</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <img width="100" height="100" src="~/img/opportunity-light.png" />
+                    <h6>Отечественное ПО</h6>
+                    <p class="text2">в перечне собраны только Российские разработки</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 100px">
+            <div class="heading-with-button">
+                <h3>Недавно добавленные</h3>
+                <form asp-controller="softwares" asp-action="index" method="get" class="d-none d-lg-block">
+                    <button type="submit" class="fast-button-small float-end">
+                        <span>Перейти</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <div class="row" style="margin-top: 16px; display:flex; align-items:stretch;">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-12 col-md-6">
+                        <button type="submit" class="software-wrapper-added" onclick="getSoftwareCard('@item.Id')" formtarget="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M0 22.1912L19.7284 2.47059H4.57982L4.62385 0H24V19.4118L21.4899 19.4559L21.5339 4.27941L1.80551 24L0 22.1912Z" />
+                            </svg>
+                            <div class="software-wrapper-added-title">
+                                @if (item.Logo != null)
+                                {
+                                    <img width="72" height="72" style="border-radius:36px" 
+                                        src="data:image/png;base64,@Convert.ToBase64String(item.Logo)" />
+                                }
+                                else
+                                {
+                                    <img width="72" height="72" style="border-radius:36px" src="~/img/software default logo.png" />
+                                }
+                                <h6 style="margin-top:10px">@item.Name</h6>
+                                <p class="text2-gray" style="margin-top:5px">@item.Vendors?.FirstOrDefault()?.Name</p>
+                            </div>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row regally">
+            <div class="col-sm-12 col-md-6 regally-col">
+                <img width="134" height="57" src="~/img/aro-group title.png" />
+                <p class="text2-gray regally-text">Перечень продуктов разработан компанией АРО ГРУПП</p>
+            </div>
+            <div class="col-sm-12 col-md-6 regally-col">
+                <img width="64" height="57" src="~/img/notim-logo.png" />
+                <p class="text2-gray regally-text">
+                    Деятельность осуществляется при поддержке Национального объединения организаций в сфере технологий 
+                    информационного моделирования (НОТИМ)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contacts-body">
+    <div class="contact-frame" id="contact-block">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 d-none d-lg-block contact-picture-wrapper"></div>
+            <div class="col-sm-12 col-lg-1 d-none d-lg-block"></div>
+            <div class="col-sm-12 col-lg-6 col-xl-7">
+                <div class="row contact-content align-content-center">
+                    <h3 class="contact-heading">Контакты</h3>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="contact-item">
+                            <img width="80" height="80" src="~/img/person-example.png" />
+                            <div style="padding-left: 16px;">
+                                <h6>Станислав Рожков</h6>
+                                <p class="text2-gray">генеральный директор</p>
+                                <p class="text2">rozhkov@arogroup.ru</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="contact-item">
+                            <img width="80" height="80" src="~/img/person-example.png" />
+                            <div style="padding-left: 16px;">
+                                <h6>Андрей Сальников</h6>
+                                <p class="text2-gray">руководитель отдела</p>
+                                <p class="text2">salnikov.aa@arogroup.ru</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Send request with search input value to softwares page *@
+    <script>
+        var mainSearcher = document.getElementById('main-searcher');
+        var searchRequestMain;
+
+        mainSearcher.addEventListener('keypress', function (e) {
+            let key = e.which || e.keyCode;
+            if (key === 13) {
+                searchRequestMain = mainSearcher.value;
+
+                if (searchRequestMain !== null && searchRequestMain !== "") {
+                    sessionStorage.setItem("search_request", searchRequestMain);
+                    
+                    $.redirect("/softwares", {
+                        sort_type: 0,
+                        current_page: 1,
+                        search_request: searchRequestMain,
+                    });
+                }
+            }
+        });
+    </script>
+    @* Send request with filter parameter by fast button *@
+    <script>
+        function getSoftwaresByFastButton(button_type) {
+            sessionStorage.setItem("sort_type", 0);
+            sessionStorage.setItem("current_page", 1);
+
+            if (button_type == "СТРОИТЕЛЬСТВО") {
+                sessionStorage.setItem("stage_filter", "Строительство");
+
+                $.redirect("/softwares", {
+                    sort_type: 0,
+                    current_page: 1,
+                    stage_filter: "Строительство",
+                });
+            }
+            else if (button_type == "ЦИМ") {
+                sessionStorage.setItem("workwithCIM_filter", 1);
+
+                $.redirect("/softwares", {
+                    sort_type: 0,
+                    current_page: 1,
+                    workwithCIM_filter: 1,
+                });
+            }
+            else if (button_type == "ПРОЕКТИРОВАНИЕ") {
+                sessionStorage.setItem("stage_filter", "Проектирование");
+
+                $.redirect("/softwares", {
+                    sort_type: 0,
+                    current_page: 1,
+                    stage_filter: "Проектирование",
+                });
+            }
+            else if (button_type == "ЭКСПЛУАТАЦИЯ") {
+                sessionStorage.setItem("stage_filter", "Эксплуатация");
+
+                $.redirect("/softwares", {
+                    sort_type: 0,
+                    current_page: 1,
+                    stage_filter: "Эксплуатация",
+                });
+            }
+        };
+    </script>
+    @* Go to the software card *@
+    <script>
+        function getSoftwareCard(input) {
+            $.redirect("/softwares/card", {
+                el_id: input,
+            }, "POST", "_blank");
+        }
+    </script>
+}

@@ -1,0 +1,33 @@
+// Hide burger menu
+@media  (max-width: 960px) {
+    .p-menubar .p-menubar-root-list {
+        position: relative;
+        display: flex;
+        flex-wrap: nowrap;
+        width: auto;
+        box-shadow: none;
+    }
+    .p-menubar-button{
+        display: none;
+    }
+    .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+        display: none !important;
+    }
+}
+
+// Show burger menu
+ @media  (max-width: 600px) {
+    .p-menubar .p-menubar-root-list {
+        position: absolute;
+        display: none;
+        flex-wrap: wrap;
+        width: 100%;
+        box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    }
+    .p-menubar-button{
+        display: flex;
+    }
+    .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+        display: flex !important;
+    }
+ }

@@ -1,0 +1,123 @@
+/*Software wrapper-buttons*/
+.software-wrapper {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #FBFBFB !important;
+    border-radius: 22px;
+    border: 1px solid;
+    border-color: #494A52;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+@media screen and (max-width: 640px) {
+    .software-wrapper {
+        padding-top: 16px;
+        padding-bottom: 0px;
+        flex-direction: column;
+        align-items: start;
+    }
+}
+.software-wrapper:hover {
+    background-color: #E9E9E9 !important;
+}
+
+/*Logo in the software wrapper-buttons*/
+.software-wrapper-logo img {
+    margin-left: 24px;
+    height: 72px;
+    border-radius: 36px;
+    border: 1px solid;
+    border-color: #E9E9E9 !important;
+}
+@media screen and (max-width: 640px) {
+    .software-wrapper-logo img {
+        margin-left: 16px;
+        height: 48px;
+        border-radius: 24px;
+    }
+}
+
+/*Logo in the software wrapper-buttons*/
+.vendor-wrapper-logo img {
+    margin-bottom: 0px;
+    margin-left: 24px;
+    height: 88px;
+    border-radius: 44px;
+    border: 1px solid;
+    border-color: #E9E9E9 !important;
+}
+
+@media screen and (max-width: 950px) {
+    .vendor-wrapper-logo img {
+        margin-bottom: 16px;
+        margin-left: 16px;
+        height: 48px;
+        border-radius: 24px;
+    }
+}
+
+.software-wrapper-title {
+    padding-top: 0px;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: start !important;
+    max-width: 75%;
+}
+@media screen and (max-width: 640px) {
+    .software-wrapper-title {
+        padding-top: 12px;
+        padding-left: 16px;
+        max-width: 100%;
+    }
+}
+
+/*Software wrapper-buttons for recently added softwares on index page*/
+.software-wrapper-added {
+    width: 100%;
+    position: relative;
+    background: #ffff;
+    border-radius: 22px;
+    border: 1px solid;
+    border-color: #494A52;
+    text-align: left;
+    margin-top: 10px;
+}
+.software-wrapper-added svg {
+    position: absolute;
+    right: 17px !important;
+    top: 17px !important;
+    color: #2b2c2e !important;
+}
+
+.software-wrapper-added:hover {
+    background-color: #3D3B3C;
+    color: #ffffff !important;
+}
+
+.software-wrapper-added:hover svg {
+    color: #ffffff !important;
+}
+
+/*Override heading in the software wrapper-buttons for recently added softwares on index page*/
+.software-wrapper-added:hover .software-wrapper-added-title h6 {
+    color: #ffffff !important; 
+}
+
+/*Heading in the software wrapper-buttons for recently added softwares on index page*/
+.software-wrapper-added-title {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+}
+@media screen and (max-width: 640px) {
+    .software-wrapper-added-title {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        margin-left: 16px;
+    }
+}

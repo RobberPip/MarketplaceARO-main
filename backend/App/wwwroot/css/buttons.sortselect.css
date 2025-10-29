@@ -1,0 +1,64 @@
+﻿.sort-select {
+    position: relative;
+    display: block;
+    width: 190px;
+    max-width: 190px;
+    margin-bottom: 2px;
+}
+
+.sort-select-head {
+    font-family: "SF Pro Display", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 130%;
+    color: #2b2c2e;
+    cursor: pointer;
+}
+
+.sort-select-head::after {
+    display: block;
+    position: absolute;
+    right: 0px;
+    bottom: 50%;
+    width: 20px;
+    height: 20px;
+    content: '';
+    background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.0972 7.91569C16.4522 7.56066 16.4522 6.98506 16.0972 6.63004C15.7422 6.27501 15.1666 6.27501 14.8116 6.63004L9.99987 11.4418L5.18815 6.63004C4.83312 6.27501 4.25752 6.27501 3.9025 6.63004C3.54747 6.98506 3.54747 7.56066 3.9025 7.91569L9.35704 13.3702C9.71207 13.7253 10.2877 13.7253 10.6427 13.3702L16.0972 7.91569Z' fill='%233D3B3C'/%3E%3C/svg%3E%0A") no-repeat center / cover;
+    transform: translateY(50%);
+    transition: .2s ease-in;
+}
+
+.sort-select-head.open::after {
+    transform: translateY(50%) rotate(180deg);
+}
+
+.sort-select-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0px;
+    width: 200px;
+    background: #fff;
+    border: 1px solid #2b2c2e;
+    border-radius: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 100;
+    margin-top: 6px;
+    padding: 0;
+    font-family: "SF Pro Display", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 130%;
+    color: #2b2c2e;
+}
+.sort-select-list.open {
+    display:block;
+}
+
+.sort-select-list .sort-select-item {
+    position: relative;
+    padding: 5px 16px;
+    cursor: pointer;
+}
